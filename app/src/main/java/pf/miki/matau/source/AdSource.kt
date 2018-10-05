@@ -170,15 +170,15 @@ class PAAdSource(filter: String, category: String) : AdSource(filter, category) 
     }
 
     override fun setDetail(ad: Ad) {
-        val start = System.currentTimeMillis()
+//        val start = System.currentTimeMillis()
 //        val obs = Single.create<Ad> { emitter ->
         computeDetail(ad)
 //            emitter.onSuccess(ad)
 //        }
 //        obs.subscribeOn(Schedulers.io())
 //                .subscribe()
-        val time = System.currentTimeMillis() - start
-        Log.i("setDetail", "time to compute detail: ${time}ms")
+//        val time = System.currentTimeMillis() - start
+//        Log.i("setDetail", "time to compute detail: ${time}ms")
     }
 
 

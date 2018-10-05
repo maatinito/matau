@@ -19,6 +19,10 @@ import pf.miki.matau.ViewModel.AdPagedAdapter
 import pf.miki.matau.ViewModel.AdViewModel
 import pf.miki.matau.databinding.ActivityMainBinding
 import pub.devrel.easypermissions.EasyPermissions
+import android.preference.PreferenceManager
+import android.content.SharedPreferences
+
+
 
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
@@ -50,11 +54,9 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
          * */
         adViewModel = ViewModelProviders.of(this).get(AdViewModel::class.java)
 
-        if (savedInstanceState != null) {
-            val c = savedInstanceState.getInt("category", -1)
-            if (c >= 0)
-                adViewModel.category = c
-        }
+        val settings = PreferenceManager.getDefaultSharedPreferences(this)
+        val c = settings.getInt("category",9)
+        adViewModel.category = c
 
         adViewModel.liveAds.observe(this, object : Observer<PagedList<Ad>> {
             override fun onChanged(t: PagedList<Ad>?) {
@@ -174,6 +176,8 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
         val category = menu2category[item.itemId]
         if (category != null) {
             adViewModel.category = category
+            val settings = PreferenceManager.getDefaultSharedPreferences(this)
+            settings.edit().putInt("category",category).apply()
             return true
         }
         return super.onOptionsItemSelected(item)
