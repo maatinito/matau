@@ -1,14 +1,10 @@
 package pf.miki.matau.source
 
+import android.arch.paging.DataSource
 import android.arch.paging.PageKeyedDataSource
 import android.util.Log
-import pf.miki.matau.Ad
-import android.arch.paging.DataSource
-import android.os.SystemClock
 import com.github.kittinunf.fuel.Fuel
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import pf.miki.matau.Ad
 import pf.miki.matau.BuildConfig
 import java.util.*
 
@@ -144,16 +140,8 @@ class PAAdSource(filter: String, category: String) : AdSource(filter, category) 
         params.add(AD to ad.id)
 
         val get = Fuel.get(url, params)
-        get.responseString { request, response, result ->
-            //do something with response
-            result.fold({ d ->
-                //do something with data
-            }, { err ->
-                //do something with error
-            })
-        }
 //        Log.i("AdSource", "Requete: ${get.url}")
-        get.responseString { request, response, result ->
+        get.responseString { _, _, result ->
             result.fold({ d ->
                 val dateMatch = datere.find(d)
                 if (dateMatch != null) {
@@ -221,16 +209,14 @@ class PAAdSource(filter: String, category: String) : AdSource(filter, category) 
 class AdSourceFactory : DataSource.Factory<Int, Ad>() {
 
     private var filter = ""
-    private var category = 9
+    var category = 9
+        set(value) {
+            field = value; source.invalidate()
+        }
     private var source: AdSource = create()
 
     fun filterOn(query: String) {
         filter = query
-        source.invalidate()
-    }
-
-    fun categorizeOn(query: Int) {
-        category = query
         source.invalidate()
     }
 

@@ -4,28 +4,26 @@ import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
-import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import android.widget.LinearLayout
-import com.github.kittinunf.fuel.Fuel
-import kotlinx.android.synthetic.main.activity_main.*
-import pub.devrel.easypermissions.EasyPermissions
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.view.Menu
-import kotlinx.android.synthetic.main.toolbar_layout.*
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar_layout.*
 import pf.miki.matau.ViewModel.AdPagedAdapter
 import pf.miki.matau.ViewModel.AdViewModel
 import pf.miki.matau.databinding.ActivityMainBinding
+import pub.devrel.easypermissions.EasyPermissions
 
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
     private val adapter: AdPagedAdapter = AdPagedAdapter(this, { adClicked(it) })
-    private var adViewModel: AdViewModel? = null
+    private lateinit var adViewModel: AdViewModel
     private var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +34,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
          * Step 1: Using DataBinding, we setup the layout for the activity
          *
          * */
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(toolBar)
 
         requiresInternetAccess()
@@ -44,7 +42,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
         //adding a layoutmanager
         adList.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
-        adList.setAdapter(adapter);
+        adList.adapter = adapter
 
         /*
          * Step 2: Initialize the ViewModel
@@ -52,11 +50,17 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
          * */
         adViewModel = ViewModelProviders.of(this).get(AdViewModel::class.java)
 
-        adViewModel!!.liveAds.observe(this, object : Observer<PagedList<Ad>> {
+        if (savedInstanceState != null) {
+            val c = savedInstanceState.getInt("category", -1)
+            if (c >= 0)
+                adViewModel.category = c
+        }
+
+        adViewModel.liveAds.observe(this, object : Observer<PagedList<Ad>> {
             override fun onChanged(t: PagedList<Ad>?) {
                 adapter.submitList(t)
             }
-        });
+        })
 
 
     }
@@ -121,7 +125,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
 
 
     private fun adClicked(ad: Ad) {
-        val detailIntent: Intent = Intent(this@MainActivity, AdDetailActivity::class.java)
+        val detailIntent = Intent(this@MainActivity, AdDetailActivity::class.java)
         detailIntent.putExtra("ad", ad)
         startActivity(detailIntent)
     }
@@ -158,26 +162,26 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
             R.id.multimedia to 19,
             R.id.telephone to 20,
             R.id.sport to 21,
-            R.id.vetements to 22,
-            R.id.puericulture to 23,
-            R.id.bijoux to 24,
-            R.id.collection to 25,
-            R.id.alimentaire to 26
+            R.id.vetements to 23,
+            R.id.puericulture to 24,
+            R.id.bijoux to 25,
+            R.id.collection to 26,
+            R.id.alimentaire to 27
     )
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         val category = menu2category[item.itemId]
         if (category != null) {
-            adViewModel?.categorizeOn(category)
+            adViewModel.category = category
             return true
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        adViewModel?.filterOn(query ?: "")
-        return true;
+        adViewModel.filterOn(query ?: "")
+        return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
@@ -189,10 +193,26 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
     }
 
     override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-        adViewModel?.filterOn("")
+        adViewModel.filterOn("")
         return true
     }
 
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        savedInstanceState.putInt("category", adViewModel.category)
+        super.onSaveInstanceState(savedInstanceState)
+    }
+
+    public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Restore UI state from the savedInstanceState.
+        // This bundle has also been passed to onCreate.
+        val c = savedInstanceState.getInt("category", -1)
+        if (c >= 0)
+            adViewModel.category = c
+    }
 
 }
 

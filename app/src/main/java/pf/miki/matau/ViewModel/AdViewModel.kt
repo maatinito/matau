@@ -1,10 +1,9 @@
 package pf.miki.matau.ViewModel
 
-import android.arch.paging.PagedList
 import android.arch.lifecycle.LiveData
-import android.arch.paging.LivePagedListBuilder
-import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
 import pf.miki.matau.Ad
 import pf.miki.matau.source.AdSourceFactory
 import java.util.concurrent.Executor
@@ -34,8 +33,9 @@ class AdViewModel : ViewModel() {
         factory.filterOn(query)
     }
 
-    fun categorizeOn(category: Int) {
-        factory.categorizeOn(category)
-
-    }
+    var category: Int
+        get() = factory.category
+        set(value) {
+            factory.category = value
+        }
 }

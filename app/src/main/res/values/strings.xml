@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Matau</string>
+    <string name="app_name" translatable="false">Matau</string>
     <string name="http" translatable="false">http://</string>
     <string name="download">Download</string>
     <string name="internet_access">This app needs access to internet to download the ads</string>
@@ -101,4 +101,6 @@
     <string name="location">Location</string>
     <string name="contact">Contact</string>
     <string name="default_description" translatable="false">...</string>
+
+
 </resources>
