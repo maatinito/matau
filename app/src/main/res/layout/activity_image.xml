@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.alexvasilkov.gestures.views.GestureFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ImageActivity"
+    android:id="@+id/gesture_layout"
+    app:gest_fitMethod="horizontal"
+    app:gest_gravity="top">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/frame_layout_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/painting_01"
+            android:contentDescription="@string/default_description" />
+
+
+    </LinearLayout>
+
+
+</com.alexvasilkov.gestures.views.GestureFrameLayout>

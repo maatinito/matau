@@ -1,24 +1,17 @@
 package pf.miki.matau
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.text.Spanned
 import android.text.util.Linkify
-import android.util.Log
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_ad_detail.*
-import kotlinx.android.synthetic.main.announce_layout.*
-import kotlinx.android.synthetic.main.announce_layout.view.*
-import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Pattern
-import android.text.util.Linkify.MatchFilter
-import java.util.regex.Matcher
 
 
 fun formatedEuroPrice(ad: Ad): String {
@@ -49,12 +42,12 @@ class AdDetailActivity : AppCompatActivity() {
         val pfPhoneRe = Pattern.compile("(40|87|89)[-0-9. ]+")
     }
 
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ad_detail)
         val ad: Ad = intent.getParcelableExtra("ad")
-        textViewDetailTitle.setText(fromHtml(ad.title))
+        textViewDetailTitle.text = fromHtml(ad.title)
         textViewDetailXPFPrice.text = formatedXPFPrice(ad)
         textViewDetailEuroPrice.text = formatedEuroPrice(ad)
         ad.liveDescription.observe(this, object : Observer<String> {
@@ -76,10 +69,17 @@ class AdDetailActivity : AppCompatActivity() {
         })
 
         Glide.with(this)
-                .load(Uri.parse(image_root + ad.vignette.replace("photo/", "photo/b")))
+                .load(Uri.parse(imageURL(ad)))
                 .into(imageViewDetailPhoto)
+
+        imageViewDetailPhoto.setOnClickListener {
+            val detailIntent = Intent(this, ImageActivity::class.java)
+            detailIntent.putExtra("image", imageURL(ad))
+            startActivity(detailIntent)
+        }
     }
 
+    private fun imageURL(ad: Ad) = image_root + ad.vignette.replace("photo/", "photo/b")
 
 
 }
