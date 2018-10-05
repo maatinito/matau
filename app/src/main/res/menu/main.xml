@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white_36dp"
+        android:title="@string/action_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/Immobilier"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="immobilier">
+        <menu>
+            <item
+                android:id="@+id/location_appartement"
+                android:title="Location d'appartement" />
+            <item
+                android:id="@+id/location_maison"
+                android:title="Location de maison" />
+            <item
+                android:id="@+id/location_vacances"
+                android:title="Vacances, Week-end" />
+            <item
+                android:id="@+id/vente_appartement"
+                android:title="Vente d'appartement" />
+            <item
+                android:id="@+id/vente_maison"
+                android:title="Vente de maison" />
+            <item
+                android:id="@+id/vente_terrain"
+                android:title="Vente de terrain" />
+            <item
+                android:id="@+id/immobilier_autre"
+                android:title="Autre" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/vehicule"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="Véhicules">
+        <menu>
+            <item
+                android:id="@+id/voiture"
+                android:title="Voitures" />
+            <item
+                android:id="@+id/motos"
+                android:title="2&amp;3 Roues" />
+            <item
+                android:id="@+id/bateau"
+                android:title="Bateaux" />
+            <item
+                android:id="@+id/pieces"
+                android:title="Pièces, Equipements" />
+            <item
+                android:id="@+id/voiture_autre"
+                android:title="Autres" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/maison"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="Maison">
+        <menu>
+            <item
+                android:id="@+id/meubles"
+                android:title="Meubles et Electroménager" />
+            <item
+                android:id="@+id/bricolage"
+                android:title="Bricolage et Jardinage" />
+            <item
+                android:id="@+id/informatique"
+                android:title="Informatique" />
+            <item
+                android:id="@+id/jeux"
+                android:title="Jeux et Jouets" />
+            <item
+                android:id="@+id/multimedia"
+                android:title="Musique et Video" />
+            <item
+                android:id="@+id/telephone"
+                android:title="Télephonie" />
+            <item
+                android:id="@+id/sport"
+                android:title="Sport (articles)" />
+            <item
+                android:id="@+id/vetements"
+                android:title="Vêtements" />
+            <item
+                android:id="@+id/puericulture"
+                android:title="Puériculture" />
+            <item
+                android:id="@+id/bijoux"
+                android:title="Bijoux, Montres, Lunettes" />
+            <item
+                android:id="@+id/collection"
+                android:title="Collections" />
+            <item
+                android:id="@+id/alimentaire"
+                android:title="Alimentaire" />
+
+
+        </menu>
+    </item>
+</menu>

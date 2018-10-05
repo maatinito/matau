@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Matau</string>
+    <string name="internet_access">Cette application nécessite un accès à internet pour télécharger les annonces</string>
+    <string name="download">Télécharger</string>
+    <string name="action_save">enregistrer</string>
+    <string name="action_delete">supprimer</string>
+    <string name="action_settings">paramètres</string>
+    <string name="action_search">chercher</string>
+    <string name="price">Prix</string>
+    <string name="location">Lieu</string>
+    <string name="contact">Contact</string>
+</resources>
