@@ -46,6 +46,7 @@ class AdDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ad_detail)
+        imageViewDetailPhoto.setImageResource(R.mipmap.ic_launcher_foregroung)
         val ad: Ad = intent.getParcelableExtra("ad")
         textViewDetailTitle.text = fromHtml(ad.title)
         textViewDetailXPFPrice.text = formatedXPFPrice(ad)
@@ -67,7 +68,6 @@ class AdDetailActivity : AppCompatActivity() {
                 Linkify.addLinks(textViewDetailContact, pfPhoneRe, "tel:", Linkify.sPhoneNumberMatchFilter,Linkify.sPhoneNumberTransformFilter)
             }
         })
-
         Glide.with(this)
                 .load(Uri.parse(imageURL(ad)))
                 .into(imageViewDetailPhoto)
