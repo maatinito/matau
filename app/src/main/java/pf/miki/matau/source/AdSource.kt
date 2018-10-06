@@ -73,26 +73,26 @@ class PAAdSource(filter: String, category: String) : AdSource(filter, category) 
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Ad>) {
         if (BuildConfig.DEBUG) Log.i(TAG, "loadInitial: placeHolder=${params.placeholdersEnabled}, size=${params.requestedLoadSize}")
-        val ads = loadPage(1)
-        callback.onResult(ads, null, 2)
+        val (ads,nextKey) = loadPage(1,'»')
+        callback.onResult(ads, null, nextKey)
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Ad>) {
         if (BuildConfig.DEBUG) Log.i(TAG, "loadAfter: placeHolder=${params.key
                 ?: "undefined"}, size=${params.requestedLoadSize}")
-        val ads = loadPage(params.key)
-        callback.onResult(ads, if (params.key < 10) params.key + 1 else null)
+        val (ads,nextKey) = loadPage(params.key,'»')
+        callback.onResult(ads, nextKey)
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Ad>) {
         if (BuildConfig.DEBUG) Log.i(TAG, "loadAfter: placeHolder=${params.key
                 ?: "undefined"}, size=${params.requestedLoadSize}")
-        val ads = loadPage(params.key)
-        callback.onResult(ads, if (params.key > 1) params.key - 1 else null)
+        val (ads,prevKey) = loadPage(params.key,'«')
+        callback.onResult(ads, prevKey)
     }
 
 
-    private fun loadPage(pageKey: Int): MutableList<Ad> {
+    private fun loadPage(pageKey: Int, char: Char): Pair<MutableList<Ad>,Int?> {
         val url = if (filter.isEmpty()) baseUrl else searchUrl
         val params = mutableListOf<Pair<String, String>>()
         params.add(CATEGORY to category)
@@ -100,12 +100,13 @@ class PAAdSource(filter: String, category: String) : AdSource(filter, category) 
             params.add(QUERY to filter)
         params.add(PAGE to pageKey.toString())
 
-        val ads = ArrayList<Ad>()
+        val ads : MutableList<Ad> = ArrayList<Ad>()
         val get = Fuel.get(url, params)
 //        Log.i("AdSource", "Requete: ${get.url}")
         val (_, _, result) = get.responseString()
         result.fold({ d ->
-            //            Log.i("Mt_document? ", "${d.length} $d")
+                        Log.i("Mt_document? ", "${d.length} $d")
+
             var r = anchor.find(d)
             while (r != null) {
                 val numero = r.groups[1]!!.value
@@ -128,10 +129,16 @@ class PAAdSource(filter: String, category: String) : AdSource(filter, category) 
                 }
                 r = r.next()
             }
+            val nextPage : Int? = when (char) {
+                '»' -> if (nextpagere.containsMatchIn(d)) pageKey + 1 else null
+                '«' -> if (prevpagere.containsMatchIn(d)) pageKey - 1 else null
+                else -> null
+            }
+            return Pair(ads,nextPage)
         }, { err ->
             Log.e("Mt_error", err.toString())
         })
-        return ads
+        return Pair(ads,null)
     }
 
     private fun computeDetail(ad: Ad) {
@@ -202,7 +209,9 @@ class PAAdSource(filter: String, category: String) : AdSource(filter, category) 
         val datere = Regex("Du ([0-9][0-9].[0-9][0-9].[0-9][0-9])")
         val locationre = Regex("LIEU : (.*?)</strong>", RegexOption.IGNORE_CASE)
         val contactre = Regex("INFOS.*?<p>(.*?)</p>", RegexOption.DOT_MATCHES_ALL)
-
+        val nextpagere = Regex("<a [^>]*?p=([0-9]+)[^>]*?>&raquo;</a>",RegexOption.IGNORE_CASE)
+        val prevpagere = Regex("<a [^>]*?p=([0-9]+)[^>]*?>&laquo;</a>",RegexOption.IGNORE_CASE)
+//        <a href="?p=2&amp;c=10&amp;q=Yamaha#txt">«</a>
     }
 }
 
