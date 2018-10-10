@@ -10,4 +10,7 @@
     <string name="price">Prix</string>
     <string name="location">Lieu</string>
     <string name="contact">Contact</string>
+    <string name="viewOnSite"><![CDATA[<a href=\'%1$s\'>Voirsur le site</a>]]></string>
+    <string name="petites">Petites</string>
+    <string name="big">Big</string>
 </resources>

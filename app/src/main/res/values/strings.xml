@@ -101,6 +101,9 @@
     <string name="location">Location</string>
     <string name="contact">Contact</string>
     <string name="default_description" translatable="false">...</string>
+    <string name="viewOnSite"><![CDATA[<a href=\'%1$s\'>View on site</a>]]></string>
+    <string name="petites">Petites</string>
+    <string name="big">Big</string>
 
 
 </resources>

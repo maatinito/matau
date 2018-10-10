@@ -1,43 +1,49 @@
 package pf.miki.matau
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.os.Parcel
 import android.os.Parcelable
 import android.support.v7.util.DiffUtil
 
 
-data class Ad(val id: String, val source : String, val title: String, val euroPrice: Float, val fcpPrice: Int, val vignette: String = "") : Parcelable {
+data class Ad(var source: String, var id: String, var title: String, var fcpPrice: Int, var vignette: String = "") : Parcelable {
 
     var liveDescription = MutableLiveData<String>()
     var liveDate = MutableLiveData<String>()
     var liveContact = MutableLiveData<String>()
     var liveLocation = MutableLiveData<String>()
+    var liveImages = MutableLiveData<List<String>>()
+
+    val euroPrice: Float
+        get() = fcpPrice / 119.33174f
+
+    constructor(s: String) : this(s, "0", "", 0, "")
 
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readFloat(),
             parcel.readInt(),
             parcel.readString()) {
         liveDescription.value = parcel.readString()
         liveDate.value = parcel.readString()
         liveContact.value = parcel.readString()
         liveLocation.value = parcel.readString()
+        liveImages.value = parcel.createStringArrayList()
+
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
         parcel.writeString(source)
+        parcel.writeString(id)
         parcel.writeString(title)
-        parcel.writeFloat(euroPrice)
         parcel.writeInt(fcpPrice)
         parcel.writeString(vignette)
         parcel.writeString(liveDescription.value)
         parcel.writeString(liveDate.value)
         parcel.writeString(liveContact.value)
         parcel.writeString(liveLocation.value)
+        parcel.writeStringList(liveImages.value)
     }
 
     override fun describeContents(): Int {

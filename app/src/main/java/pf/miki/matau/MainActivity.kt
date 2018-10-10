@@ -7,6 +7,7 @@ import android.arch.paging.PagedList
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
@@ -18,11 +19,9 @@ import kotlinx.android.synthetic.main.toolbar_layout.*
 import pf.miki.matau.ViewModel.AdPagedAdapter
 import pf.miki.matau.ViewModel.AdViewModel
 import pf.miki.matau.databinding.ActivityMainBinding
+import pf.miki.matau.source.Category
+import pf.miki.matau.source.SourceType
 import pub.devrel.easypermissions.EasyPermissions
-import android.preference.PreferenceManager
-import android.content.SharedPreferences
-
-
 
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
@@ -54,9 +53,26 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
          * */
         adViewModel = ViewModelProviders.of(this).get(AdViewModel::class.java)
 
+        // restart with previous category
+
         val settings = PreferenceManager.getDefaultSharedPreferences(this)
-        val c = settings.getInt("category",9)
-        adViewModel.category = c
+        val cint = try {
+            settings.getInt("category", -1)
+        } catch (e: ClassCastException) {
+            -1
+        }
+        if (cint >= 0)
+            settings.edit().remove("category").apply() // old way to store the category
+        val c: String = settings.getString("category", null) ?: Category.voiture.toString()
+        val category: Category = try {
+            Category.valueOf(c)
+        } catch (e: IllegalArgumentException) {
+            Category.voiture
+        }
+        val title = settings.getString("title", null) ?: category.toString()
+        supportActionBar?.title = title
+
+        adViewModel.category = category
 
         adViewModel.liveAds.observe(this, object : Observer<PagedList<Ad>> {
             override fun onChanged(t: PagedList<Ad>?) {
@@ -67,46 +83,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
 
     }
 
-
-/*
-        //adding some dummy data to the list
-        adapter.add(Ad("1225099",
-                "TOYOTA HILUX 3L DIESEL - 4X4",
-                "TOYOTA HILUX 3L DIESEL - 4X4 - BOITE MANUELLE - 172.000P - DÉCEMBRE 2005 - 205.000KM - 1ERE MAIN - RÉVISION FAITE - DISTRIBUTION CHANGÉE - AUCUN TRAVAUX A PRÉVOIR",
-                "Tahiti", 16_676.20f, 1_990_000, "87 773 761"))
-        adapter.add(Ad("1225116", "18/221A - FAAA APPARTEMENT DUPLEX F5 MEUBLÉ (VTP)",
-                "Idéalement situé dans petit ensemble immobilier neuf, à proximité immédiate de tous les commerces, grands axes et écoles, très bel appartement neuf de type F5 de 109 M² à louer.\n" +
-                        "\n" +
-                        "Meublé et équipé, le logement se compose:\n" +
-                        "\n" +
-                        "- Au RDC : d'un salon avec cuisine, d'une buanderie et d'un WC séparé, avec une belle terrasse et un jardinet clos, d'une chambre avec salle d'eau attenante,\n" +
-                        "\n" +
-                        "- A l'étage : de trois chambres (une suite parentale climatisée), et de deux salles de bains.\n" +
-                        "\n" +
-                        "Disponible début novembre (travaux en cours), la location est soumise à conditions de ressources.\n" +
-                        "\n" +
-                        "*Visuels non-contractuels.",
-                "Tahiti",
-                1676f, 200000,
-                "THOMAS : 87 27 31 21\n" +
-                        "Whatsapp et Viber :+689 87 27 31 21"
-        ))
-        adapter.add(Ad("1224904",
-                "cafetière senséo",
-                "vds cafetière senséo tb état",
-                "Pirae / Tahiti",
-                41.90f, 5000,
-                "89201761"))
-
-
-        //now adding the adapter to recyclerview
-        adList.adapter = adapter
-
-        val url = "http://petitesannonces.pf/annonces.php?c=9"
-
-
-    }
-*/
 
     private fun requiresInternetAccess() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.INTERNET)) {
@@ -144,43 +120,55 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
         return true
     }
 
-    val menu2category = hashMapOf<Int, Int>(R.id.location_appartement to 4,
-            R.id.vente_appartement to 1,
-            R.id.vente_maison to 2,
-            R.id.vente_terrain to 3,
-            R.id.location_appartement to 4,
-            R.id.location_maison to 5,
-            R.id.location_vacances to 6,
-            R.id.immobilier_autre to 7,
-            R.id.voiture to 9,
-            R.id.motos to 10,
-            R.id.bateau to 11,
-            R.id.pieces to 13,
-            R.id.voiture_autre to 14,
-            R.id.meubles to 15,
-            R.id.bricolage to 16,
-            R.id.informatique to 17,
-            R.id.jeux to 18,
-            R.id.multimedia to 19,
-            R.id.telephone to 20,
-            R.id.sport to 21,
-            R.id.vetements to 23,
-            R.id.puericulture to 24,
-            R.id.bijoux to 25,
-            R.id.collection to 26,
-            R.id.alimentaire to 27
+    val menu2category = hashMapOf<Int, Category>(
+            R.id.vente_appartement to Category.Vente_appartement,
+            R.id.vente_maison to Category.vente_maison,
+            R.id.vente_terrain to Category.vente_terrain,
+            R.id.location_appartement to Category.location_appartement,
+            R.id.location_maison to Category.location_maison,
+            R.id.location_vacances to Category.location_vacances,
+            R.id.immobilier_autre to Category.immobilier_autre,
+            R.id.voiture to Category.voiture,
+            R.id.motos to Category.motos,
+            R.id.bateau to Category.bateau,
+            R.id.pieces to Category.pieces,
+            R.id.voiture_autre to Category.voiture_autre,
+            R.id.meubles to Category.meubles,
+            R.id.bricolage to Category.bricolage,
+            R.id.informatique to Category.informatique,
+            R.id.jeux to Category.jeux,
+            R.id.multimedia to Category.multimedia,
+            R.id.telephone to Category.telephone,
+            R.id.sport to Category.sport,
+            R.id.vetements to Category.vetements,
+            R.id.puericulture to Category.puericulture,
+            R.id.bijoux to Category.bijoux,
+            R.id.collection to Category.collection,
+            R.id.alimentaire to Category.alimentaire
     )
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         val category = menu2category[item.itemId]
         if (category != null) {
-            adViewModel.category = category
-            val settings = PreferenceManager.getDefaultSharedPreferences(this)
-            settings.edit().putInt("category",category).apply()
-            return true
+
+            if (category != null && category != adViewModel.category) {
+                supportActionBar?.title = item.title
+                adViewModel.category = category
+                adViewModel.filterOn("")
+                val settings = PreferenceManager.getDefaultSharedPreferences(this)
+                settings.edit()
+                        .putString("category", category.toString())
+                        .putString("title", item.title.toString()).apply()
+                return true
+            }
         }
-        return super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.PA -> adViewModel.sourceType = SourceType.PETITES_ANNONCES
+            R.id.BigCE -> adViewModel.sourceType = SourceType.BIG_CE
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true // was PA or BigCE
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -205,7 +193,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
         // Save UI state changes to the savedInstanceState.
         // This bundle will be passed to onCreate if the process is
         // killed and restarted.
-        savedInstanceState.putInt("category", adViewModel.category)
+        savedInstanceState.putString("category", adViewModel.category.toString())
         super.onSaveInstanceState(savedInstanceState)
     }
 
@@ -213,9 +201,9 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
         super.onRestoreInstanceState(savedInstanceState)
         // Restore UI state from the savedInstanceState.
         // This bundle has also been passed to onCreate.
-        val c = savedInstanceState.getInt("category", -1)
-        if (c >= 0)
-            adViewModel.category = c
+        val c = savedInstanceState.getString("category")
+        if (c != null)
+            adViewModel.category = Category.valueOf(c)
     }
 
 }

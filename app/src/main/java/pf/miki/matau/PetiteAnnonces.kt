@@ -1,4 +1,3 @@
 package pf.miki.matau
 
-class PetiteAnnonces {
-}
+class PetiteAnnonces

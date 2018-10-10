@@ -6,6 +6,7 @@ import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import pf.miki.matau.Ad
 import pf.miki.matau.source.AdSourceFactory
+import pf.miki.matau.source.Category
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -33,9 +34,16 @@ class AdViewModel : ViewModel() {
         factory.filterOn(query)
     }
 
-    var category: Int
+    var category: Category
         get() = factory.category
         set(value) {
             factory.category = value
         }
+
+    var sourceType
+        get() = factory.sourceType
+        set(value) {
+            factory.sourceType = value
+        }
+
 }

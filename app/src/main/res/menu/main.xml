@@ -102,7 +102,21 @@
                 android:id="@+id/alimentaire"
                 android:title="Alimentaire" />
 
-
         </menu>
     </item>
+    <item
+        android:id="@+id/site"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="Site">
+        <menu>
+            <item
+                android:id="@+id/PA"
+                android:title="@string/petites" />
+            <item
+                android:id="@+id/BigCE"
+                android:title="@string/big" />
+        </menu>
+    </item>
+
+
 </menu>

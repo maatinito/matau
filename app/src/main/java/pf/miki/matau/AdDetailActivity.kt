@@ -7,9 +7,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.util.Log
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_ad_detail.*
+import pf.miki.matau.source.Attribute
 import java.util.*
 import java.util.regex.Pattern
 
@@ -39,7 +42,7 @@ class AdDetailActivity : AppCompatActivity() {
     val image_root = "http://petitesannonces.pf/"
 
     companion object {
-        val pfPhoneRe = Pattern.compile("(40|87|89)[-0-9. ]+")
+        val pfPhoneRe = Pattern.compile(Attribute.contactre.pattern)
     }
 
 
@@ -51,11 +54,15 @@ class AdDetailActivity : AppCompatActivity() {
         textViewDetailTitle.text = fromHtml(ad.title)
         textViewDetailXPFPrice.text = formatedXPFPrice(ad)
         textViewDetailEuroPrice.text = formatedEuroPrice(ad)
+        val linkText = resources.getString(R.string.viewOnSite, ad.id)
+        textViewDetailId.text = fromHtml(linkText)
+        textViewDetailId.movementMethod = LinkMovementMethod.getInstance()
         ad.liveDescription.observe(this, object : Observer<String> {
             override fun onChanged(d: String?) {
                 textViewDetailShortDesc.text = fromHtml(d ?: "")
-                Linkify.addLinks(textViewDetailShortDesc, Linkify.ALL)
-                Linkify.addLinks(textViewDetailShortDesc, pfPhoneRe, "tel:", Linkify.sPhoneNumberMatchFilter,Linkify.sPhoneNumberTransformFilter)            }
+                Linkify.addLinks(textViewDetailShortDesc, Linkify.EMAIL_ADDRESSES or Linkify.WEB_URLS)
+                Linkify.addLinks(textViewDetailShortDesc, pfPhoneRe, "tel:", Linkify.sPhoneNumberMatchFilter, Linkify.sPhoneNumberTransformFilter)
+            }
         })
         ad.liveLocation.observe(this, object : Observer<String> {
             override fun onChanged(d: String?) {
@@ -65,21 +72,28 @@ class AdDetailActivity : AppCompatActivity() {
         ad.liveContact.observe(this, object : Observer<String> {
             override fun onChanged(d: String?) {
                 textViewDetailContact.text = d ?: ""
-                Linkify.addLinks(textViewDetailContact, pfPhoneRe, "tel:", Linkify.sPhoneNumberMatchFilter,Linkify.sPhoneNumberTransformFilter)
+                Linkify.addLinks(textViewDetailContact, pfPhoneRe, "tel:", Linkify.sPhoneNumberMatchFilter, Linkify.sPhoneNumberTransformFilter)
             }
         })
-        Glide.with(this)
-                .load(Uri.parse(imageURL(ad)))
-                .into(imageViewDetailPhoto)
-
-        imageViewDetailPhoto.setOnClickListener {
-            val detailIntent = Intent(this, ImageActivity::class.java)
-            detailIntent.putExtra("image", imageURL(ad))
-            startActivity(detailIntent)
-        }
+        ad.liveDate.observe(this, object : Observer<String> {
+            override fun onChanged(d: String?) {
+                textViewDetailDate.text = d ?: ""
+            }
+        })
+        ad.liveImages.observe(this, object : Observer<List<String>> {
+            override fun onChanged(images: List<String>?) {
+                if (images != null && images.isNotEmpty()) {
+                    Log.i("AdDetailView", "Images=" + images[0])
+                    Glide.with(this@AdDetailActivity)
+                            .load(Uri.parse(images[0]))
+                            .into(imageViewDetailPhoto)
+                    imageViewDetailPhoto.setOnClickListener {
+                        val detailIntent = Intent(this@AdDetailActivity, ImageActivity::class.java)
+                        detailIntent.putExtra("image", images[0])
+                        startActivity(detailIntent)
+                    }
+                }
+            }
+        })
     }
-
-    private fun imageURL(ad: Ad) = image_root + ad.vignette.replace("photo/", "photo/b")
-
-
 }

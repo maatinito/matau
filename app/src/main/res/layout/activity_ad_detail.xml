@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/colorPrimaryDark"
+            android:paddingVertical="10dp"
             android:text="TOYOTA HILUX 3L DIESEL - 4X4"
             android:textAlignment="center"
-            android:paddingVertical="10dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textColor="@color/cardview_light_background"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,60 +31,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewDetailShortDesc"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="1.99M XPF"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/xpfPriceLabel"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle" />
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailId" />
 
-        <TextView
-            android:id="@+id/textViewDetailEuroPrice"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="16 676 €"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle" />
 
         <TextView
             android:id="@+id/textViewDetailLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Arue"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/locationLabel"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textViewDetailXPFPrice" />
 
         <TextView
             android:id="@+id/xpfPriceLabel"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/price"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailId" />
 
-        <TextView
-            android:id="@+id/euroPriceLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/price"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintEnd_toStartOf="@+id/textViewDetailEuroPrice"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle" />
 
         <TextView
             android:id="@+id/locationLabel"
@@ -110,11 +87,10 @@
             android:id="@+id/textViewDetailContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="87 22 34 44"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/contactLabel"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textViewDetailLocation" />
 
         <TextView
@@ -142,7 +118,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDetailShortDesc"
-            app:srcCompat="@mipmap/ic_launcher_foregroung" />
+            tools:srcCompat="@mipmap/ic_launcher_foregroung" />
 
         <Button
             android:id="@+id/button"
@@ -156,6 +132,82 @@
             app:layout_constraintHorizontal_bias="0.469"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewDetailPhoto" />
+
+        <TextView
+            android:id="@+id/textViewDetailId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/viewOnSite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle" />
+
+        <TextView
+            android:id="@+id/euroPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="right|center_vertical"
+            android:text="@string/price"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailId" />
+
+        <TextView
+            android:id="@+id/textViewDetailEuroPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:text=" 6787 €"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/euroPriceLabel" />
+
+        <TextView
+            android:id="@+id/dateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Date"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailEuroPrice" />
+
+        <TextView
+            android:id="@+id/textViewDetailDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="10/10/2018"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/dateLabel" />
+
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="69dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="290dp" />
+
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

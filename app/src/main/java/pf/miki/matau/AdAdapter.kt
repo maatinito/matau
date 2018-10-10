@@ -2,22 +2,18 @@ package pf.miki.matau
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
-import android.graphics.ColorSpace.match
-import android.net.Uri
 import android.support.v7.widget.RecyclerView
-import android.system.Os.accept
 import android.text.Html
 import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.announce_layout.view.*
 
 class AdAdapter(val owner: LifecycleOwner, val clickListener: (Ad) -> Unit) : RecyclerView.Adapter<AdAdapter.ViewHolder>() {
     val raw = ArrayList<Ad>()
     var filtered : MutableList<Ad> = ArrayList<Ad>()
-    var filter : Regex = Regex("");
+    var filter: Regex = Regex("")
 
 
     //this method is returning the view for each item in the list
@@ -40,7 +36,7 @@ class AdAdapter(val owner: LifecycleOwner, val clickListener: (Ad) -> Unit) : Re
         if (filtered.equals(query))
             return
         filtered.clear()
-        filter = if (query == null) Regex("") else Regex(Regex.escape(query),RegexOption.IGNORE_CASE);
+        filter = if (query == null) Regex("") else Regex(Regex.escape(query), RegexOption.IGNORE_CASE)
         if (filter.pattern.length == 0) {
             filtered.addAll(raw)
         } else {
@@ -56,10 +52,6 @@ class AdAdapter(val owner: LifecycleOwner, val clickListener: (Ad) -> Unit) : Re
         fun bind(ad: Ad, clickListener: (Ad) -> Unit) {
             itemView.textViewTitle.text = fromHtml(ad.title)
             itemView.textViewPrice.text = ad.fcpPrice.toString() + " XPF"
-//            itemView.textViewLocation.text = fromHtml(ad.location)
-            Glide.with(itemView.context)
-                    .load(Uri.parse(image_root + ad.vignette))
-                    .into(itemView.imageView)
 
             itemView.setOnClickListener { clickListener(ad) }
             ad.liveDescription.observe(owner,object : Observer<String> {
