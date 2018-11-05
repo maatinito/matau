@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Matau</string>
     <string name="internet_access">Cette application nécessite un accès à internet pour télécharger les annonces</string>
     <string name="download">Télécharger</string>
     <string name="action_save">enregistrer</string>
@@ -13,4 +12,10 @@
     <string name="viewOnSite"><![CDATA[<a href=\'%1$s\'>Voirsur le site</a>]]></string>
     <string name="petites">Petites</string>
     <string name="big">Big</string>
+    <string name="AdPinned">Annonce ajoutée aux favorites</string>
+    <string name="AdUnpinned">Annonce enlevée des favorites</string>
+    <string name="NoPinnedAd">Aucune annonce favorite.</string>
+    <string name="retry">Réessayer</string>
+    <string name="no_results">Aucune annonce trouvée</string>
+    <string name="network_error">Impossible de télécharger les données. Vérifiez votre connection à Internet. (Erreur technique: %1$s)</string>
 </resources>

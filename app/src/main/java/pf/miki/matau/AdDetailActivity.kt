@@ -1,31 +1,42 @@
 package pf.miki.matau
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.text.Spanned
+import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.util.Log
+import android.widget.CompoundButton
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_ad_detail.*
+import pf.miki.matau.fragment.BaseAdViewModel
+import pf.miki.matau.fragment.ads.AdViewModel
+import pf.miki.matau.repository.AppDatabase
 import pf.miki.matau.source.Attribute
+import pf.miki.matau.repository.Ad
+import pf.miki.matau.repository.PAd
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 
 
-fun formatedEuroPrice(ad: Ad): String {
+fun formatedEuroPrice(euroPrice: Float): String {
     val pf = Locale.Builder().setLanguage("fr").setRegion("PF").build()
-    return if (ad.euroPrice >= 100) String.format(pf, "%.0f €", ad.euroPrice) else String.format(pf, "% .2f €", ad.euroPrice)
+    return if (euroPrice >= 100) String.format(pf, "%.0f €", euroPrice) else String.format(pf, "% .2f €", euroPrice)
 }
 
 
-fun formatedXPFPrice(ad: Ad): String {
+fun formatedXPFPrice(fcpPrice: Int): String {
     val pf = Locale.Builder().setLanguage("fr").setRegion("PF").build()
-    return if (ad.fcpPrice >= 1000000) String.format(pf, "%.2fM XPF", ad.fcpPrice / 1000000f) else String.format(pf, "%,d XPF", ad.fcpPrice)
+    return if (fcpPrice >= 1000000) String.format(pf, "%.2fM XPF", fcpPrice / 1000000f) else String.format(pf, "%,d XPF", fcpPrice)
 }
 
 fun fromHtml(text: String): Spanned {
@@ -39,51 +50,48 @@ fun fromHtml(text: String): Spanned {
 
 class AdDetailActivity : AppCompatActivity() {
 
-    val image_root = "http://petitesannonces.pf/"
+    val format = DateFormat.getDateFormat(this)
 
     companion object {
         val pfPhoneRe = Pattern.compile(Attribute.contactre.pattern)
     }
 
 
+    private lateinit var adViewModel: BaseAdViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ad_detail)
-        imageViewDetailPhoto.setImageResource(R.mipmap.ic_launcher_foregroung)
-        val ad: Ad = intent.getParcelableExtra("ad")
-        textViewDetailTitle.text = fromHtml(ad.title)
-        textViewDetailXPFPrice.text = formatedXPFPrice(ad)
-        textViewDetailEuroPrice.text = formatedEuroPrice(ad)
-        val linkText = resources.getString(R.string.viewOnSite, ad.id)
-        textViewDetailId.text = fromHtml(linkText)
-        textViewDetailId.movementMethod = LinkMovementMethod.getInstance()
-        ad.liveDescription.observe(this, object : Observer<String> {
-            override fun onChanged(d: String?) {
-                textViewDetailShortDesc.text = fromHtml(d ?: "")
+
+        adViewModel = ViewModelProviders.of(this).get(BaseAdViewModel::class.java)
+
+        val ad_id = intent.getStringExtra("ad")
+
+        val liveAd: LiveData<PAd> = adViewModel.loadAd(ad_id)
+        liveAd.observe(this, Observer<PAd> { ad ->
+            if (ad != null) {
+                // prices
+                textViewDetailTitle.text = fromHtml(ad.title)
+                textViewDetailXPFPrice.text = formatedXPFPrice(ad.fcpPrice)
+                textViewDetailEuroPrice.text = formatedEuroPrice(ad.euroPrice)
+                // View on site link
+                val linkText = resources.getString(R.string.viewOnSite, ad.id)
+                textViewDetailId.text = fromHtml(linkText)
+                textViewDetailId.movementMethod = LinkMovementMethod.getInstance()
+                // description
+                textViewDetailShortDesc.text = fromHtml(ad.description)
                 Linkify.addLinks(textViewDetailShortDesc, Linkify.EMAIL_ADDRESSES or Linkify.WEB_URLS)
                 Linkify.addLinks(textViewDetailShortDesc, pfPhoneRe, "tel:", Linkify.sPhoneNumberMatchFilter, Linkify.sPhoneNumberTransformFilter)
-            }
-        })
-        ad.liveLocation.observe(this, object : Observer<String> {
-            override fun onChanged(d: String?) {
-                textViewDetailLocation.text = fromHtml(d ?: "")
-            }
-        })
-        ad.liveContact.observe(this, object : Observer<String> {
-            override fun onChanged(d: String?) {
-                textViewDetailContact.text = d ?: ""
+                // location
+                textViewDetailLocation.text = fromHtml(ad.location)
+                // contact
+                textViewDetailContact.text = ad.contact
                 Linkify.addLinks(textViewDetailContact, pfPhoneRe, "tel:", Linkify.sPhoneNumberMatchFilter, Linkify.sPhoneNumberTransformFilter)
-            }
-        })
-        ad.liveDate.observe(this, object : Observer<String> {
-            override fun onChanged(d: String?) {
-                textViewDetailDate.text = d ?: ""
-            }
-        })
-        ad.liveImages.observe(this, object : Observer<List<String>> {
-            override fun onChanged(images: List<String>?) {
-                if (images != null && images.isNotEmpty()) {
-                    Log.i("AdDetailView", "Images=" + images[0])
+                // date
+                textViewDetailDate.text = format.format(ad.date)
+                val images = ad.imageList
+                if (images.isNotEmpty()) {
                     Glide.with(this@AdDetailActivity)
                             .load(Uri.parse(images[0]))
                             .into(imageViewDetailPhoto)
@@ -93,6 +101,9 @@ class AdDetailActivity : AppCompatActivity() {
                         startActivity(detailIntent)
                     }
                 }
+                saveToggleButton.setOnCheckedChangeListener(null)
+                saveToggleButton.isChecked = ad.pinned
+                saveToggleButton.setOnCheckedChangeListener { _, isChecked -> adViewModel.pin(ad, isChecked) }
             }
         })
     }

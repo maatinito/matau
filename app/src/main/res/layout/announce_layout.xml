@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -13,7 +14,7 @@
             android:id="@+id/cardViewLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:padding="4dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -25,9 +26,9 @@
                 android:id="@+id/textViewTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/imageView"
-                android:text="Toyota Hilux"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/imageView"
+                tools:text="Toyota Hilux"
                 android:textAppearance="@style/TextAppearance.Compat.Notification"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold" />
@@ -37,9 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewTitle"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/imageView"
+                android:layout_toEndOf="@id/imageView"
                 android:text="@string/default_description"
                 android:textAppearance="@style/TextAppearance.Compat.Notification.Line2" />
 
@@ -48,9 +49,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewShortDesc"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/imageView"
+                android:layout_toEndOf="@id/imageView"
                 android:text="100 XPF"
                 android:textAppearance="@style/TextAppearance.Compat.Notification.Line2"
                 android:textStyle="bold" />
@@ -60,12 +61,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewPrice"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/imageView"
+                android:layout_toEndOf="@id/imageView"
                 android:text="@string/default_description"
                 android:textAppearance="@style/TextAppearance.Compat.Notification.Line2"
                 android:textStyle="bold" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonPin"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignBottom="@+id/imageView"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/hibiscus_selector"
+                android:textOff=""
+                android:textOn="" />
 
         </RelativeLayout>
 

@@ -1,0 +1,138 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "bdf6e6420bf67cf9fa42a35af4b822dc",
+    "entities": [
+      {
+        "tableName": "PAd",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`images` TEXT NOT NULL, `pinned` INTEGER NOT NULL, `lastViewed` INTEGER NOT NULL, `created` INTEGER NOT NULL, `source` TEXT NOT NULL, `id` TEXT NOT NULL, `title` TEXT NOT NULL, `fcpPrice` INTEGER NOT NULL, `vignette` TEXT NOT NULL, `description` TEXT NOT NULL, `date` INTEGER NOT NULL, `contact` TEXT NOT NULL, `location` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "images",
+            "columnName": "images",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pinned",
+            "columnName": "pinned",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastViewed",
+            "columnName": "lastViewed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fcpPrice",
+            "columnName": "fcpPrice",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vignette",
+            "columnName": "vignette",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contact",
+            "columnName": "contact",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PAd_fcpPrice",
+            "unique": false,
+            "columnNames": [
+              "fcpPrice"
+            ],
+            "createSql": "CREATE  INDEX `index_PAd_fcpPrice` ON `${TABLE_NAME}` (`fcpPrice`)"
+          },
+          {
+            "name": "index_PAd_date",
+            "unique": false,
+            "columnNames": [
+              "date"
+            ],
+            "createSql": "CREATE  INDEX `index_PAd_date` ON `${TABLE_NAME}` (`date`)"
+          },
+          {
+            "name": "index_PAd_pinned",
+            "unique": false,
+            "columnNames": [
+              "pinned"
+            ],
+            "createSql": "CREATE  INDEX `index_PAd_pinned` ON `${TABLE_NAME}` (`pinned`)"
+          },
+          {
+            "name": "index_PAd_lastViewed",
+            "unique": false,
+            "columnNames": [
+              "lastViewed"
+            ],
+            "createSql": "CREATE  INDEX `index_PAd_lastViewed` ON `${TABLE_NAME}` (`lastViewed`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bdf6e6420bf67cf9fa42a35af4b822dc\")"
+    ]
+  }
+}

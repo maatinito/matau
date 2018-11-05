@@ -1,6 +1,8 @@
 package pf.miki.matau.source
 
-class BigCESource(filter: String, category: Category) : BaseSource(filter, category) {
+import android.content.Context
+
+class BigCESource(filter: String, category: Category, context : Context) : BaseSource(filter, category, context) {
 
     override fun getBaseURL(category: Category, filter: String, pageKey: Int): BaseURL {
         val params = mutableListOf<Pair<String, String>>()
@@ -22,6 +24,7 @@ class BigCESource(filter: String, category: Category) : BaseSource(filter, categ
                 Attribute.IMAGES -> it.value.forEachIndexed { i, s -> it.value[i] = imageUrl + s }
                 Attribute.THUMBNAIL -> it.value.forEachIndexed { i, s -> it.value[i] = imageUrl + s }
                 Attribute.DATE -> it.value.forEachIndexed { i, s -> it.value[i] = s.replace(" ", "").replace("201", "1") }
+                else -> {}
             }
         }
     }

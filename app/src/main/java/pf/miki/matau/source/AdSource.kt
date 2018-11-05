@@ -1,12 +1,23 @@
 package pf.miki.matau.source
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.DataSource
 import android.arch.paging.PageKeyedDataSource
+import android.content.Context
 import android.util.Log
 import com.github.kittinunf.fuel.Fuel
-import pf.miki.matau.Ad
 import pf.miki.matau.BuildConfig
-import kotlin.reflect.KFunction2
+import pf.miki.matau.R
+import pf.miki.matau.fragment.ads2.NetworkState
+import pf.miki.matau.fragment.ads2.SourceParameters
+import pf.miki.matau.repository.AppDatabase
+import pf.miki.matau.repository.PAd
+import java.lang.RuntimeException
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
+import kotlin.reflect.KFunction3
 
 
 enum class Category {
@@ -46,23 +57,23 @@ enum class Category {
  */
 enum class Attribute {
     ID {
-        override fun set(ad: Ad, value: List<String>) {
+        override fun set(ad: PAd, value: List<String>) {
             ad.id = if (value.isNotEmpty()) value[0] else ""
         }
     },
     TITLE {
-        override fun set(ad: Ad, value: List<String>) {
+        override fun set(ad: PAd, value: List<String>) {
             ad.title = if (value.isNotEmpty()) value[0] else ""
         }
     },
     DESCRIPTION {
-        override fun set(ad: Ad, value: List<String>) {
+        override fun set(ad: PAd, value: List<String>) {
             if (value.isNotEmpty()) {
                 val d = value.joinToString("\n")
-                ad.liveDescription.postValue(d)
+                ad.description = d
 
                 // look for contact in the description to update the contact field
-                val contact = ad.liveContact.value ?: ""
+                val contact = ad.contact
                 if (contact.isBlank()) {
                     val contacts = contactre.findAll(d)
                             .map(MatchResult::value)
@@ -70,48 +81,56 @@ enum class Attribute {
                             .filter { s -> !contact.contains(s) }
                             .joinToString()
                     if (contacts.isNotEmpty())
-                        ad.liveContact.postValue(contacts)
+                        ad.contact = contacts
                 }
             }
         }
     },
     PRICE {
-        override fun set(ad: Ad, value: List<String>) {
+        override fun set(ad: PAd, value: List<String>) {
             ad.fcpPrice = if (value.isNotEmpty()) value[0].replace(" ", "").replace(',', '.').toInt() else 0
         }
     },
     THUMBNAIL {
-        override fun set(ad: Ad, value: List<String>) {
+        override fun set(ad: PAd, value: List<String>) {
             ad.vignette = if (value.isNotEmpty()) value[0] else ""
 //            Log.i("Attribute", "thumbnail=$value")
         }
     },
     DATE {
-        override fun set(ad: Ad, value: List<String>) {
-            ad.liveDate.postValue(if (value.isNotEmpty()) value[0].replace(" ", "").replace("201", "1") else "")
+        override fun set(ad: PAd, value: List<String>) {
+            if (value.isNotEmpty()) {
+                val sdf = SimpleDateFormat("dd/MM/yy",Locale.FRENCH)
+                val dateString = value[0].replace(" ", "").replace("201", "1")
+                try {
+                    ad.date = sdf.parse(dateString)
+                } catch (e: RuntimeException) {
+                    ad.date = Date()
+                    Log.e("Matau", "Unable to parse ad date ${value[0]}", e)
+                }
+            }
         }
     },
     CONTACT {
-        override fun set(ad: Ad, value: List<String>) {
-            ad.liveContact.postValue(if (value.isNotEmpty()) value[0] else "")
+        override fun set(ad: PAd, value: List<String>) {
+            ad.contact = if (value.isNotEmpty()) value[0] else ""
         }
     },
     LOCATION {
-        override fun set(ad: Ad, value: List<String>) {
-            ad.liveLocation.postValue(if (value.isNotEmpty()) value[0] else "")
+        override fun set(ad: PAd, value: List<String>) {
+            ad.location = if (value.isNotEmpty()) value[0] else ""
         }
     },
     IMAGES {
-        override fun set(ad: Ad, value: List<String>) {
-            ad.liveImages.postValue(value)
-            //Log.i("Attribute", "Images=$value")
+        override fun set(ad: PAd, value: List<String>) {
+            ad.imageList = value
         }
     };
 
-    abstract fun set(ad: Ad, value: List<String>)
+    abstract fun set(ad: PAd, value: List<String>)
 
     companion object {
-        val contactre = Regex("(40|87|89)[-. ]?[0-9][-. ]?[0-9][-. ]?[0-9][-. ]?[0-9][-. ]?[0-9][-. ]?[0-9]")
+        val contactre = Regex("(\\+?689[-. ]?)?(40|87|89)[-. ]?[0-9][-. ]?[0-9][-. ]?[0-9][-. ]?[0-9][-. ]?[0-9][-. ]?[0-9]")
 
     }
 
@@ -136,18 +155,24 @@ data class Configuration(val source: String,
 
 data class BaseURL(val url: String, val params: List<Pair<String, String>>)
 
-abstract class AdSource(var filter: String, var category: Category) : PageKeyedDataSource<Int, Ad>() {
-    abstract fun setDetail(ad: Ad)
+abstract class AdSource(var filter: String, var category: Category) : PageKeyedDataSource<Int, PAd>() {
+    abstract fun setDetail(ads: ArrayList<PAd>)
+
+    val networkState = MutableLiveData<NetworkState>()
+    val refreshState = MutableLiveData<NetworkState>()
+    val updatedAds = MutableLiveData<List<PAd>>()
 }
 
-abstract class BaseSource(filter: String, category: Category) : AdSource(filter, category) {
+abstract class BaseSource(filter: String, category: Category, val context: Context) : AdSource(filter, category) {
+    private val executor: Executor = Executors.newFixedThreadPool(1)
 
     abstract fun getConfiguration(): Configuration
     abstract fun getBaseURL(category: Category, filter: String, pageKey: Int): BaseURL
 
-    private fun loadPage(pageKey: Int, direction: Direction): Pair<MutableList<Ad>, Int?> {
+    private fun loadPage(pageKey: Int, direction: Direction): Pair<MutableList<PAd>, Int?> {
+        networkState.postValue(NetworkState.LOADING)
         val baseURL: BaseURL = getBaseURL(category, filter, pageKey)
-        val ads = ArrayList<Ad>()
+        val ads = ArrayList<PAd>()
         val get = Fuel.get(baseURL.url, baseURL.params)
 //        Log.i("AdSource", "Requete: ${get.url}")
         val (_, _, result) = get.responseString()
@@ -174,12 +199,11 @@ abstract class BaseSource(filter: String, category: Category) : AdSource(filter,
                         Log.i("AdSource", "Attribute ${am.attribute}=No Value!")
                     attributes[am.attribute] = values
                 }
-                val ad = Ad(conf.source)
+                val ad = PAd(conf.source)
                 normalizeAttributes(attributes)
                 for (am in attributes)
                     am.key.set(ad, am.value)
                 ads.add(ad)
-                setDetail(ad)
                 Log.i("Adsource", "loadAd time=${System.currentTimeMillis() - adStart}ms")
                 r1 = r1.next()
             }
@@ -188,8 +212,11 @@ abstract class BaseSource(filter: String, category: Category) : AdSource(filter,
                 Direction.PREVIOUS -> if (conf.prevRe.containsMatchIn(d)) pageKey - 1 else null
             }
             Log.i("Adsource", "loadPage time=${System.currentTimeMillis() - start}ms")
+            executor.execute { setDetail(ads) }
+            networkState.postValue(NetworkState.LOADED)
             return Pair(ads, nextPage)
         }, { err ->
+            networkState.postValue(NetworkState.error(context.resources.getString(R.string.network_error, err.message)))
             Log.e("AdSource", "Unable to load listing of ads $err")
         })
         return Pair(ads, null)
@@ -199,11 +226,23 @@ abstract class BaseSource(filter: String, category: Category) : AdSource(filter,
 
     // this methods loads the page describing an ad to load specific fields not present in the listing of ads like description, images ...
 
-    override fun setDetail(ad: Ad) {
-        //Log.i("AdSource", "Requete: ${ad.id}")
-        val get = Fuel.get(ad.id)
-        val start = System.currentTimeMillis()
-        get.responseString { _, _, result ->
+    override fun setDetail(ads: ArrayList<PAd>) {
+        var start = System.currentTimeMillis()
+        val db = AppDatabase.getDatabase(context)
+        val adIds = ads.map { it.id }
+        val cachedAds = db.pAdDao().loadAds(adIds).associateBy { it.id }
+        Log.i("Adsource", "SetDetail dbaccess=${System.currentTimeMillis() - start}ms ${Thread.currentThread().name}")
+        start = System.currentTimeMillis()
+        ads.forEach { ad ->
+            val cachedAd = cachedAds[ad.id]
+            if (cachedAd != null) {
+                fillAttributes(ad, cachedAd)
+                Log.i("Matau.Source", "PAd already cached: ${ad.title}")
+                return@forEach
+            }
+            // PAd not in cache ==> get the detail from the web
+            val get = Fuel.get(ad.id)
+            val (_, _, result) = get.responseString()
             result.fold({ d ->
                 var startPos = 0
                 val matchers = getConfiguration().detailMatchers
@@ -227,31 +266,45 @@ abstract class BaseSource(filter: String, category: Category) : AdSource(filter,
                         Log.i("AdSource", "Attribute2 ${ad.id}:${am.attribute}=No Value!")
 
                 }
+                // normalize and sets the attributes
                 normalizeAttributes(attributes)
                 for (am in attributes)
                     am.key.set(ad, am.value)
-                //Log.i("AdSource", "Final ad=${ad.liveImages.value}")
+                // store the ad in database to serve as a cache
+                db.pAdDao().insert(ad)
             }, { err ->
                 Log.e("AdSource", "Unable to load ${ad.id} $err")
             })
         }
-        Log.i("Adsource", "SetDetail time=${System.currentTimeMillis() - start}ms")
+        updatedAds.postValue(ads)
+        Log.i("Adsource", "SetDetail time=${System.currentTimeMillis() - start}ms, cached ads count = ${cachedAds.size}")
     }
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Ad>) {
+    private fun fillAttributes(ad: PAd, cachedAd: PAd) {
+        with(ad) {
+            pinned = cachedAd.pinned
+            images = cachedAd.images
+            description = cachedAd.description
+            location = cachedAd.location
+            contact = cachedAd.contact
+            date = cachedAd.date
+        }
+    }
+
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PAd>) {
         if (BuildConfig.DEBUG) Log.i(TAG, "loadInitial: placeHolder=${params.placeholdersEnabled}, size=${params.requestedLoadSize}")
         val (ads, nextKey) = loadPage(1, Direction.NEXT)
         callback.onResult(ads, null, nextKey)
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Ad>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PAd>) {
         if (BuildConfig.DEBUG) Log.i(TAG, "loadAfter: placeHolder=${params.key
                 ?: "undefined"}, size=${params.requestedLoadSize}")
         val (ads, nextKey) = loadPage(params.key, Direction.NEXT)
         callback.onResult(ads, nextKey)
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Ad>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PAd>) {
         if (BuildConfig.DEBUG) Log.i(TAG, "loadAfter: placeHolder=${params.key
                 ?: "undefined"}, size=${params.requestedLoadSize}")
         val (ads, prevKey) = loadPage(params.key, Direction.PREVIOUS)
@@ -266,42 +319,53 @@ abstract class BaseSource(filter: String, category: Category) : AdSource(filter,
 
 }
 
-enum class SourceType(val construct: KFunction2<String, Category, AdSource>) {
+enum class SourceType(val construct: KFunction3<String, Category, Context, AdSource>) {
     PETITES_ANNONCES(::PAAdSource),
     BIG_CE(::BigCESource);
 }
 
-class AdSourceFactory : DataSource.Factory<Int, Ad>() {
+class AdSourceFactory(val context: Context) : DataSource.Factory<Int, PAd>() {
 
-    private var filter = ""
-
-    var sourceType: SourceType = SourceType.PETITES_ANNONCES
-        set(value) {
-            field = value; source.invalidate()
-        }
-
-    var category = Category.voiture
-        set(value) {
-            field = value; source.invalidate()
-        }
-
-    fun filterOn(query: String) {
-        filter = query
-        source.invalidate()
-    }
-
-    private var source: AdSource = create()
-
+    var source = MutableLiveData<AdSource>()
 
     override fun create(): AdSource {
-        source = sourceType.construct(filter, category)
-        return source
+        val sp = liveParameters.value
+                ?: SourceParameters(SourceType.PETITES_ANNONCES, Category.voiture, "")
+        with(sp) {
+            val s = sourceType.construct(search, category, context)
+            source.postValue(s)
+            return s
+        }
     }
 
-    fun sourceForAd(ad: Ad): AdSource {
-        return source
+    var liveParameters = MutableLiveData<SourceParameters>()
+
+    init {
+        liveParameters.observeForever {
+            source.value?.invalidate()
+        }
     }
 
+    var category: Category
+        get() = liveParameters.value?.category ?: Category.voiture
+        set(value) {
+            if (value != liveParameters.value?.category)
+                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(SourceType.PETITES_ANNONCES,value,"")
+        }
+
+    var sourceType
+        get() = liveParameters.value?.sourceType ?: SourceType.PETITES_ANNONCES
+        set(value) {
+            if (value != liveParameters.value?.sourceType)
+                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(value,Category.voiture,"")
+        }
+
+
+    var search
+        get() = liveParameters.value?.search ?: ""
+        set(value) {
+            if (value != liveParameters.value?.search)
+                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(SourceType.PETITES_ANNONCES,Category.voiture,value)
+        }
 
 }
-

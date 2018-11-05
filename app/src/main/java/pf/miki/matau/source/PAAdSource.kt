@@ -1,12 +1,15 @@
 package pf.miki.matau.source
 
-class PAAdSource(filter: String, category: Category) : BaseSource(filter, category) {
+import android.content.Context
+
+class PAAdSource(filter: String, category: Category, context : Context) : BaseSource(filter, category,context) {
     override fun normalizeAttributes(attributes: HashMap<Attribute, MutableList<String>>) {
         attributes.forEach {
             when (it.key) {
                 Attribute.ID -> it.value.forEachIndexed { i, s -> it.value[i] = detailUrl + s }
                 Attribute.IMAGES -> it.value.forEachIndexed { i, s -> it.value[i] = detailUrl + s }
                 Attribute.THUMBNAIL -> it.value.forEachIndexed { i, s -> it.value[i] = detailUrl + s }
+                else -> {}
             }
         }
     }
@@ -68,10 +71,10 @@ class PAAdSource(filter: String, category: Category) : BaseSource(filter, catego
                 Category.telephone to 20,
                 Category.sport to 21,
                 Category.vetements to 23,
-                Category.puericulture to 24,
-                Category.bijoux to 25,
-                Category.collection to 26,
-                Category.alimentaire to 27
+                Category.puericulture to 51,
+                Category.bijoux to 24,
+                Category.collection to 25,
+                Category.alimentaire to 52
         )
 
 

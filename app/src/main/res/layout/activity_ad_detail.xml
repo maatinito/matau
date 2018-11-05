@@ -31,12 +31,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewDetailShortDesc"
-            android:layout_marginTop="16dp"
             android:text="1.99M XPF"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDetailId" />
+            app:layout_constraintTop_toTopOf="@+id/euroPriceLabel" />
 
 
         <TextView
@@ -56,11 +55,10 @@
             android:layout_height="0dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:text="@string/price"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDetailId" />
+            app:layout_constraintTop_toTopOf="@+id/euroPriceLabel" />
 
 
         <TextView
@@ -70,6 +68,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/location"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/xpfPriceLabel" />
 
@@ -80,6 +79,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/contact"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationLabel" />
 
@@ -89,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="87 22 34 44"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textViewDetailLocation" />
@@ -120,27 +121,15 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewDetailShortDesc"
             tools:srcCompat="@mipmap/ic_launcher_foregroung" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@mipmap/ic_launcher_foregroung"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.469"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewDetailPhoto" />
-
         <TextView
             android:id="@+id/textViewDetailId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="@string/viewOnSite"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle" />
@@ -150,13 +139,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="right|center_vertical"
             android:text="@string/price"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDetailId" />
+            app:layout_constraintTop_toBottomOf="@+id/saveToggleButton" />
 
         <TextView
             android:id="@+id/textViewDetailEuroPrice"
@@ -208,6 +197,19 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="290dp" />
 
+        <ToggleButton
+            android:id="@+id/saveToggleButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/hibiscus_selector"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

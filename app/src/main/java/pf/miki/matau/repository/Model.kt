@@ -1,15 +1,18 @@
-package pf.miki.matau
+package pf.miki.matau.repository
 
 import android.arch.lifecycle.MutableLiveData
 import android.os.Parcel
 import android.os.Parcelable
 import android.support.v7.util.DiffUtil
+import java.util.*
 
 
 data class Ad(var source: String, var id: String, var title: String, var fcpPrice: Int, var vignette: String = "") : Parcelable {
 
+    var pinned = false
+    var lastViewed = Date()
     var liveDescription = MutableLiveData<String>()
-    var liveDate = MutableLiveData<String>()
+    var liveDate = MutableLiveData<Date>()
     var liveContact = MutableLiveData<String>()
     var liveLocation = MutableLiveData<String>()
     var liveImages = MutableLiveData<List<String>>()
@@ -20,13 +23,15 @@ data class Ad(var source: String, var id: String, var title: String, var fcpPric
     constructor(s: String) : this(s, "0", "", 0, "")
 
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString()!!,
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readInt(),
-            parcel.readString()) {
+            parcel.readString()!!) {
+        pinned = parcel.readInt() != 0
+        lastViewed = Date(parcel.readLong())
         liveDescription.value = parcel.readString()
-        liveDate.value = parcel.readString()
+        liveDate.value = Date(parcel.readLong())
         liveContact.value = parcel.readString()
         liveLocation.value = parcel.readString()
         liveImages.value = parcel.createStringArrayList()
@@ -39,8 +44,10 @@ data class Ad(var source: String, var id: String, var title: String, var fcpPric
         parcel.writeString(title)
         parcel.writeInt(fcpPrice)
         parcel.writeString(vignette)
+        parcel.writeInt(if (pinned) 1 else 0 )
+        parcel.writeLong(lastViewed.time)
         parcel.writeString(liveDescription.value)
-        parcel.writeString(liveDate.value)
+        parcel.writeLong(liveDate.value?.time ?: Date().time)
         parcel.writeString(liveContact.value)
         parcel.writeString(liveLocation.value)
         parcel.writeStringList(liveImages.value)
@@ -51,15 +58,6 @@ data class Ad(var source: String, var id: String, var title: String, var fcpPric
     }
 
     companion object CREATOR : Parcelable.Creator<Ad> {
-        val EqualCallBack: DiffUtil.ItemCallback<Ad> = object : DiffUtil.ItemCallback<Ad>() {
-            override fun areItemsTheSame(oldItem: Ad, newItem: Ad): Boolean {
-                return oldItem === newItem
-            }
-
-            override fun areContentsTheSame(oldItem: Ad, newItem: Ad): Boolean {
-                return oldItem.id == newItem.id
-            }
-        }
 
         override fun createFromParcel(parcel: Parcel): Ad {
             return Ad(parcel)

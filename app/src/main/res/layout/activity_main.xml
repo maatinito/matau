@@ -1,29 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
+    <data></data>
 
-    <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-
-        <include layout="@layout/toolbar_layout" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/adList"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/toolbar_layout" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="0dp"
+                android:minHeight="?attr/actionBarSize"
+                android:tag="tag1"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:tabGravity="fill">
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="Annonces" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="Favoris" />
+            </android.support.design.widget.TabLayout>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@android:drawable/ic_dialog_email" />
 
     </LinearLayout>
 </layout>

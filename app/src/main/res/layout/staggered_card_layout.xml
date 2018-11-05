@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <RelativeLayout
+            android:id="@+id/pinnedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/pinnedImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:contentDescription="Ad thumbnail"
+                tools:src="@mipmap/ic_launcher_foregroung"/>
+
+            <TextView
+                android:id="@+id/pinnedTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pinnedImageView"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/pinnedPinButton"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.Compat.Notification"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                tools:text="Toyota Hilux" />
+
+            <TextView
+                android:id="@+id/pinnedPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pinnedTitleTextView"
+                android:layout_toStartOf="@id/pinnedPinButton"
+                android:layout_alignParentStart="true"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Line2"
+                android:textStyle="bold"
+                tools:text="100 XPF" />
+
+            <ToggleButton
+                android:id="@+id/pinnedPinButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignTop="@+id/pinnedTitleTextView"
+                android:layout_alignEnd="@+id/pinnedImageView"
+                android:background="@drawable/hibiscus_selector"
+                android:textOff=""
+                android:textOn="" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
