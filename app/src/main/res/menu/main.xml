@@ -101,6 +101,9 @@
             <item
                 android:id="@+id/alimentaire"
                 android:title="Alimentaire" />
+            <item
+                android:id="@+id/bonnes_affaires"
+                android:title="Autres" />
 
         </menu>
     </item>

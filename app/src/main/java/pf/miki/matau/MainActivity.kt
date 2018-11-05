@@ -132,7 +132,8 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, MenuIt
             R.id.puericulture to Category.puericulture,
             R.id.bijoux to Category.bijoux,
             R.id.collection to Category.collection,
-            R.id.alimentaire to Category.alimentaire
+            R.id.alimentaire to Category.alimentaire,
+            R.id.bonnes_affaires to Category.bonnes_affaires
     )
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

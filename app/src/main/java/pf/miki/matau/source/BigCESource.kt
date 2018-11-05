@@ -94,7 +94,9 @@ class BigCESource(filter: String, category: Category, context : Context) : BaseS
                 Category.puericulture to 192,
                 Category.bijoux to 201,
                 Category.collection to 190,
+                Category.bonnes_affaires to 199,
                 Category.alimentaire to 0
+
         )
         private val configuration = Configuration(
                 "petites-annonces",

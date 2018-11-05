@@ -74,6 +74,7 @@ class PAAdSource(filter: String, category: Category, context : Context) : BaseSo
                 Category.puericulture to 51,
                 Category.bijoux to 24,
                 Category.collection to 25,
+                Category.bonnes_affaires to 26,
                 Category.alimentaire to 52
         )
 

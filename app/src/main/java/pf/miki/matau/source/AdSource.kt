@@ -46,6 +46,7 @@ enum class Category {
     bijoux,
     collection,
     alimentaire,
+    bonnes_affaires
 
 }
 
