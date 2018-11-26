@@ -13,6 +13,7 @@ import pf.miki.matau.fragment.ads2.SourceParameters
 import pf.miki.matau.repository.AppDatabase
 import pf.miki.matau.repository.PAd
 import java.lang.RuntimeException
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executor
@@ -101,7 +102,7 @@ enum class Attribute {
     DATE {
         override fun set(ad: PAd, value: List<String>) {
             if (value.isNotEmpty()) {
-                val sdf = SimpleDateFormat("dd/MM/yy",Locale.FRENCH)
+                val sdf = SimpleDateFormat("dd/MM/yy", Locale.FRENCH)
                 val dateString = value[0].replace(" ", "").replace("201", "1")
                 try {
                     ad.date = sdf.parse(dateString)
@@ -174,6 +175,7 @@ abstract class BaseSource(filter: String, category: Category, val context: Conte
         networkState.postValue(NetworkState.LOADING)
         val baseURL: BaseURL = getBaseURL(category, filter, pageKey)
         val ads = ArrayList<PAd>()
+
         val get = Fuel.get(baseURL.url, baseURL.params)
 //        Log.i("AdSource", "Requete: ${get.url}")
         val (_, _, result) = get.responseString()
@@ -189,15 +191,15 @@ abstract class BaseSource(filter: String, category: Category, val context: Conte
                 val attributes = hashMapOf<Attribute, MutableList<String>>()
                 for (am in matchers) {
                     val values = ArrayList<String>(2)
-                    //Log.i("AdSource", "Looking for attribute ${am.attribute}")
+//                    Log.i("Matau.AdSource", "Looking for attribute ${am.attribute}")
                     val match = am.regex.find(d, startPos)
                     if (match != null) {
                         val value = match.groupValues[1]
                         values.add(value)
-                        //Log.i("AdSource", "Attribute ${am.attribute}=$value")
+//                        Log.i("Matau.AdSource", "Attribute ${am.attribute}=$value")
                         startPos = match.range.last
                     } else if (values.isEmpty())
-                        Log.i("AdSource", "Attribute ${am.attribute}=No Value!")
+                        Log.i("Matau.AdSource", "Attribute ${am.attribute}=No Value!")
                     attributes[am.attribute] = values
                 }
                 val ad = PAd(conf.source)
@@ -205,14 +207,14 @@ abstract class BaseSource(filter: String, category: Category, val context: Conte
                 for (am in attributes)
                     am.key.set(ad, am.value)
                 ads.add(ad)
-                Log.i("Adsource", "loadAd time=${System.currentTimeMillis() - adStart}ms")
+//                Log.i("Adsource", "loadAd time=${System.currentTimeMillis() - adStart}ms")
                 r1 = r1.next()
             }
             val nextPage: Int? = when (direction) {
                 Direction.NEXT -> if (conf.nextRe.containsMatchIn(d)) pageKey + 1 else null
                 Direction.PREVIOUS -> if (conf.prevRe.containsMatchIn(d)) pageKey - 1 else null
             }
-            Log.i("Adsource", "loadPage time=${System.currentTimeMillis() - start}ms")
+//            Log.i("Adsource", "loadPage time=${System.currentTimeMillis() - start}ms")
             executor.execute { setDetail(ads) }
             networkState.postValue(NetworkState.LOADED)
             return Pair(ads, nextPage)
@@ -232,13 +234,13 @@ abstract class BaseSource(filter: String, category: Category, val context: Conte
         val db = AppDatabase.getDatabase(context)
         val adIds = ads.map { it.id }
         val cachedAds = db.pAdDao().loadAds(adIds).associateBy { it.id }
-        Log.i("Adsource", "SetDetail dbaccess=${System.currentTimeMillis() - start}ms ${Thread.currentThread().name}")
+//        Log.i("Adsource", "SetDetail dbaccess=${System.currentTimeMillis() - start}ms ${Thread.currentThread().name}")
         start = System.currentTimeMillis()
         ads.forEach { ad ->
             val cachedAd = cachedAds[ad.id]
             if (cachedAd != null) {
                 fillAttributes(ad, cachedAd)
-                Log.i("Matau.Source", "PAd already cached: ${ad.title}")
+//                Log.i("Matau.Source", "PAd already cached: ${ad.title}")
                 return@forEach
             }
             // PAd not in cache ==> get the detail from the web
@@ -250,12 +252,12 @@ abstract class BaseSource(filter: String, category: Category, val context: Conte
                 val attributes = hashMapOf<Attribute, MutableList<String>>()
                 for (am in matchers) {
                     val values = ArrayList<String>(2)
-                    //Log.i("AdSource", "Looking for attribute ${am.attribute}")
+//                    Log.i("AdSource", "Looking for attribute ${am.attribute}")
                     do {
                         val match = am.regex.find(d, startPos)
                         if (match != null) {
                             val value = match.groupValues[1]
-                            //Log.i("AdSource", "Attribute ${am.attribute}=$value")
+//                            Log.i("AdSource", "Attribute ${am.attribute}=$value")
                             values.add(value)
                             startPos = match.range.last
                         }
@@ -278,7 +280,7 @@ abstract class BaseSource(filter: String, category: Category, val context: Conte
             })
         }
         updatedAds.postValue(ads)
-        Log.i("Adsource", "SetDetail time=${System.currentTimeMillis() - start}ms, cached ads count = ${cachedAds.size}")
+//        Log.i("Adsource", "SetDetail time=${System.currentTimeMillis() - start}ms, cached ads count = ${cachedAds.size}")
     }
 
     private fun fillAttributes(ad: PAd, cachedAd: PAd) {
@@ -351,14 +353,14 @@ class AdSourceFactory(val context: Context) : DataSource.Factory<Int, PAd>() {
         get() = liveParameters.value?.category ?: Category.voiture
         set(value) {
             if (value != liveParameters.value?.category)
-                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(SourceType.PETITES_ANNONCES,value,"")
+                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(SourceType.PETITES_ANNONCES, value, "")
         }
 
     var sourceType
         get() = liveParameters.value?.sourceType ?: SourceType.PETITES_ANNONCES
         set(value) {
             if (value != liveParameters.value?.sourceType)
-                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(value,Category.voiture,"")
+                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(value, Category.voiture, "")
         }
 
 
@@ -366,7 +368,7 @@ class AdSourceFactory(val context: Context) : DataSource.Factory<Int, PAd>() {
         get() = liveParameters.value?.search ?: ""
         set(value) {
             if (value != liveParameters.value?.search)
-                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(SourceType.PETITES_ANNONCES,Category.voiture,value)
+                liveParameters.value = liveParameters.value?.new(value) ?: SourceParameters(SourceType.PETITES_ANNONCES, Category.voiture, value)
         }
 
 }
