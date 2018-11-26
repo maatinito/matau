@@ -8,7 +8,7 @@ import pf.miki.matau.source.Category
 import pf.miki.matau.source.SourceType
 
 data class SourceParameters(val sourceType: SourceType, val category: Category, val search: String) {
-    fun new(c: Category) = SourceParameters(sourceType, c, "")
+    fun new(c: Category) = SourceParameters(sourceType, c, search)
     fun new(s: String) = SourceParameters(sourceType, category, s)
     fun new(s: SourceType) = SourceParameters(s, category, search)
 }
