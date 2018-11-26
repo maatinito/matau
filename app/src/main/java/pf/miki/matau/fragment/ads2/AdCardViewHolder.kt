@@ -19,7 +19,7 @@ import pf.miki.matau.fromHtml
 import pf.miki.matau.repository.PAd
 import java.util.*
 
-class AdCardViewHolder(itemView: View, val listener : AdInteractionListener?) : RecyclerView.ViewHolder(itemView) {
+class AdCardViewHolder(itemView: View, val listener: AdInteractionListener?) : RecyclerView.ViewHolder(itemView) {
 
     private val title: TextView = itemView.findViewById(R.id.textViewTitle)
     private val price: TextView = itemView.findViewById(R.id.textViewPrice)
@@ -33,11 +33,11 @@ class AdCardViewHolder(itemView: View, val listener : AdInteractionListener?) : 
             return
         title.text = fromHtml(ad.title)
         price.text = formatedXPFPrice(ad.fcpPrice)
-        desc.text = fromHtml( ad.description.substring(0, Math.min(40, ad.description.length)))
+        desc.text = fromHtml(ad.description.substring(0, Math.min(40, ad.description.length)))
         location.text = fromHtml(ad.location)
         pin.setOnCheckedChangeListener(null)
         pin.isChecked = ad.pinned
-        Log.i("Adapter","isSelected=${ad.pinned}")
+        Log.i("Adapter", "isSelected=${ad.pinned}")
 
         // transfer the pin check to my owner
         if (listener != null) {
@@ -48,17 +48,23 @@ class AdCardViewHolder(itemView: View, val listener : AdInteractionListener?) : 
                 .placeholder(R.mipmap.ic_launcher_foregroung)
                 .error(R.mipmap.ic_launcher_foregroung)
 
-        Glide.with(itemView.context)
-                .load(Uri.parse(ad.vignette))
-                .apply(myOptions)
-                .into(thumbnail)
+        if (ad.vignette != null && ad.vignette.startsWith("http"))
+            Glide.with(itemView.context)
+                    .load(Uri.parse(ad.vignette))
+                    .apply(myOptions)
+                    .into(thumbnail)
+        else
+            Glide.with(itemView.context)
+                    .load(R.mipmap.ic_launcher_foregroung)
+                    .apply(myOptions)
+                    .into(thumbnail)
 
         val difference: Int = ((Date().time - ad.date.time) / 86400000).toInt()
         itemView.setBackgroundColor(Color.argb(Math.min(difference, 125), 0x83, 0x3b, 0x14))
     }
 
     companion object {
-        fun create(parent: ViewGroup, listener : AdInteractionListener?): AdCardViewHolder {
+        fun create(parent: ViewGroup, listener: AdInteractionListener?): AdCardViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.announce_layout, parent, false)
             return AdCardViewHolder(view, listener)
         }
