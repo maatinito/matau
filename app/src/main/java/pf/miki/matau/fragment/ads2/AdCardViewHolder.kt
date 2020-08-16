@@ -12,10 +12,10 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import pf.miki.matau.helpers.AdInteractionListener
 import pf.miki.matau.R
 import pf.miki.matau.formatedXPFPrice
 import pf.miki.matau.fromHtml
+import pf.miki.matau.helpers.AdInteractionListener
 import pf.miki.matau.repository.PAd
 import java.util.*
 
@@ -48,7 +48,7 @@ class AdCardViewHolder(itemView: View, val listener: AdInteractionListener?) : R
                 .placeholder(R.mipmap.ic_launcher_foregroung)
                 .error(R.mipmap.ic_launcher_foregroung)
 
-        if (ad.vignette != null && ad.vignette.startsWith("http"))
+        if (ad.vignette.startsWith("http"))
             Glide.with(itemView.context)
                     .load(Uri.parse(ad.vignette))
                     .apply(myOptions)

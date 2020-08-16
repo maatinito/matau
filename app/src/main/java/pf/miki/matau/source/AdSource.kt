@@ -12,8 +12,6 @@ import pf.miki.matau.fragment.ads2.NetworkState
 import pf.miki.matau.fragment.ads2.SourceParameters
 import pf.miki.matau.repository.AppDatabase
 import pf.miki.matau.repository.PAd
-import java.lang.RuntimeException
-import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executor
@@ -180,14 +178,14 @@ abstract class BaseSource(filter: String, category: Category, val context: Conte
 //        Log.i("AdSource", "Requete: ${get.url}")
         val (_, _, result) = get.responseString()
         result.fold({ d ->
-            val start = System.currentTimeMillis()
+            //            val start = System.currentTimeMillis()
             val conf = getConfiguration()
             val matchers = conf.matchers
             val a = conf.anchor
             var r1 = a.find(d)
             while (r1 != null) {
                 var startPos = r1.range.first
-                val adStart = System.currentTimeMillis()
+//                val adStart = System.currentTimeMillis()
                 val attributes = hashMapOf<Attribute, MutableList<String>>()
                 for (am in matchers) {
                     val values = ArrayList<String>(2)
@@ -230,12 +228,12 @@ abstract class BaseSource(filter: String, category: Category, val context: Conte
     // this methods loads the page describing an ad to load specific fields not present in the listing of ads like description, images ...
 
     override fun setDetail(ads: ArrayList<PAd>) {
-        var start = System.currentTimeMillis()
+//        var start = System.currentTimeMillis()
         val db = AppDatabase.getDatabase(context)
         val adIds = ads.map { it.id }
         val cachedAds = db.pAdDao().loadAds(adIds).associateBy { it.id }
 //        Log.i("Adsource", "SetDetail dbaccess=${System.currentTimeMillis() - start}ms ${Thread.currentThread().name}")
-        start = System.currentTimeMillis()
+//        start = System.currentTimeMillis()
         ads.forEach { ad ->
             val cachedAd = cachedAds[ad.id]
             if (cachedAd != null) {

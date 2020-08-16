@@ -18,4 +18,8 @@
     <string name="retry">Réessayer</string>
     <string name="no_results">Aucune annonce trouvée</string>
     <string name="network_error">Impossible de télécharger les données. Vérifiez votre connection à Internet. (Erreur technique: %1$s)</string>
+    <string name="channel_description">Notify when an ad matching your criterias is found</string>
+    <string name="search_in_title">Chercher uniquement dans le titre</string>
+    <string name="category">Catégorie</string>
+    <string name="text_to_look_for">Mots à rechercher</string>
 </resources>

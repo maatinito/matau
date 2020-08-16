@@ -12,18 +12,11 @@ import android.text.Spanned
 import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.util.Log
-import android.widget.CompoundButton
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_ad_detail.*
 import pf.miki.matau.fragment.BaseAdViewModel
-import pf.miki.matau.fragment.ads.AdViewModel
-import pf.miki.matau.repository.AppDatabase
-import pf.miki.matau.source.Attribute
-import pf.miki.matau.repository.Ad
 import pf.miki.matau.repository.PAd
-import java.text.SimpleDateFormat
+import pf.miki.matau.source.Attribute
 import java.util.*
 import java.util.regex.Pattern
 
@@ -50,8 +43,6 @@ fun fromHtml(text: String): Spanned {
 
 class AdDetailActivity : AppCompatActivity() {
 
-    val format = DateFormat.getDateFormat(this)
-
     companion object {
         val pfPhoneRe = Pattern.compile(Attribute.contactre.pattern)
     }
@@ -63,6 +54,7 @@ class AdDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ad_detail)
+        val format = DateFormat.getDateFormat(this)
 
         adViewModel = ViewModelProviders.of(this).get(BaseAdViewModel::class.java)
 

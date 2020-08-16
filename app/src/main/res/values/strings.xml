@@ -21,6 +21,29 @@
     <string name="retry">Réessayer</string>
     <string name="no_results">No result found</string>
     <string name="network_error">Unable to download data. Verify your connection. (technical error %1$s)</string>
-
+    <array name="categories">
+        <item>Immobilier"</item>
+        <item>Location d&quot;appartement</item>
+        <item>Location de maison</item>
+        <item>Vacances, Week-end</item>
+        <item>Vente d&quot;appartement</item>
+        <item>Vente de maison</item>
+        <item>Vente de terrain</item>
+        <item>Autre</item>
+        <item>-- Véhicules --</item>
+        <item>Voitures</item>
+        <item>2&amp;3 Roues</item>
+        <item>Bateaux</item>
+        <item>Pièces, Equipements</item>
+        <item>Autres</item>
+        <item>Maison</item>
+        <item>Meubles et Electroménager</item>
+        <item>Bricolage et Jardinage</item>
+    </array>
+    <string name="channel_description">Notify when an ad matching your criterias is found</string>
+    <string name="search_in_title">Search only in title</string>
+    <string name="text_to_look_for">words to look for</string>
+    <string name="category">Category</string>
+    <string name="channel_name" translatable="false">SearchBot</string>
 
 </resources>

@@ -6,9 +6,6 @@ import android.arch.lifecycle.Transformations
 import android.arch.paging.DataSource
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import pf.miki.matau.fragment.ads2.NetworkState
 import pf.miki.matau.fragment.ads2.SourceParameters
@@ -16,8 +13,6 @@ import pf.miki.matau.helpers.Alias
 import pf.miki.matau.source.AdSourceFactory
 import pf.miki.matau.source.Category
 import pf.miki.matau.source.SourceType
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -94,6 +89,10 @@ class AdRepository(val context: Context) {
 
     fun allPinnedAdsByDate(): DataSource.Factory<Int, PAd> {
         return db.pAdDao().allPinnedAdsByDate()
+    }
+
+    fun computeMaxPrice(): LiveData<Int> {
+        return db.pAdDao().getMaxPrice()
     }
 
     fun maintenance() {

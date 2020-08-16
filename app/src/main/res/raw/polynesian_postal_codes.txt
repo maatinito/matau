@@ -1,0 +1,262 @@
+Commune ou section	Commune	Population	Region	Ile	Archipel
+Iles Du Vent	Iles Du Vent	207333			Iles Du Vent
+Tahiti	Tahiti	172940		Tahiti	Iles Du Vent
+Grand Papeete	Grand Papeete	121000		Tahiti	Iles Du Vent
+Iles Sous Le Vent	Iles Sous Le Vent	35393			Iles Sous Le Vent
+Faaa	Faaa	29687	Grand Papeete	Tahiti	Iles Du Vent
+Punaauia	Punaauia	27613	Grand Papeete	Tahiti	Iles Du Vent
+Papeete	Papeete	25769	Grand Papeete	Tahiti	Iles Du Vent
+Grand Taravao	Grand Taravao	20000		Tahiti	Iles Du Vent
+Moorea	Moorea	17236		Moorea	Iles Du Vent
+Iles Tuamotu-Gambiers	Iles Tuamotu-Gambiers	16881			Iles Tuamotu-Gambiers
+MAHINA	Mahina	14351	Grand Papeete	Tahiti	Iles Du Vent
+PIRAE	Pirae	14129	Grand Papeete	Tahiti	Iles Du Vent
+PAEA	Paea	12541		Tahiti	Iles Du Vent
+PAPARA	Papara	11143		Tahiti	Iles Du Vent
+Bora-Bora	Bora-Bora	9610		Bora-Bora	Iles Sous Le Vent
+ARUE	Arue	9537	Grand Papeete	Tahiti	Iles Du Vent
+Iles Marquises	Iles Marquises	9356			Iles Marquises
+Iles Australes	Iles Australes	6965			Iles Australes
+BORA-BORA/NUNUE	Nunue	5614		Bora-Bora	Iles Sous Le Vent
+BORA-BORA/FAANUI	Faanui	2962		Bora-Bora	Iles Sous Le Vent
+BORA-BORA/ANAU	Anau	1973		Bora-Bora	Iles Sous Le Vent
+HUAHINE/FARE	Fare	1603		Huahine	Iles Sous Le Vent
+HUAHINE/FITII	Fitii	1161		Huahine	Iles Sous Le Vent
+HUAHINE/MAEVA	Maeva	1013		Huahine	Iles Sous Le Vent
+HUAHINE/HAAPU	Haapu	633		Huahine	Iles Sous Le Vent
+HUAHINE/MAROE	Maroe	535		Huahine	Iles Sous Le Vent
+HUAHINE/PAREA	Parea	517		Huahine	Iles Sous Le Vent
+HUAHINE/TEFARERII	Tefarerii	456		Huahine	Iles Sous Le Vent
+HUAHINE/FAIE	Faie	395		Huahine	Iles Sous Le Vent
+NUKU-HIVA/AAKAPA	Aakapa			Nuku-Hiva	Iles Marquises
+AFAAHITI	Afaahiti		Grand Taravao	Tahiti	Iles Du Vent
+MOOREA-MAIAO/AFAREAITU	Afareaitu			Moorea	Iles Du Vent
+MANIHI/AHE	Ahe			Ahe	Iles Tuamotu-Gambiers
+HAO/AHUNUI	Ahunui			Ahunui	Iles Tuamotu-Gambiers
+RAPA/AHUREI	Ahurei			Rapa	Iles Australes
+GAMBIER/AKAMARU	Akamaru			Akamaru	Iles Tuamotu-Gambiers
+AKIAKI	Akiaki			Akiaki	Iles Tuamotu-Gambiers
+AMANU	Amanu			Amanu	Iles Tuamotu-Gambiers
+RIMATARA/AMARU	Amaru			Rimatara	Iles Australes
+ANAA	Anaa			Anaa	Iles Tuamotu-Gambiers
+RIMATARA/ANAPOTO	Anapoto			Rimatara	Iles Australes
+RAIVAVAE/ANATONU	Anatonu			Raivavae	Iles Australes
+GAMBIER/ANGAKAUITAI	Angakauitai			Angakauitai	Iles Tuamotu-Gambiers
+ANUANURARO	Anuanuraro			Anuanuraro	Iles Tuamotu-Gambiers
+ANUANURUNGA	Anuanurunga			Anuanurunga	Iles Tuamotu-Gambiers
+APATAKI	Apataki			Apataki	Iles Tuamotu-Gambiers
+ARATIKA	Aratika			Aratika	Iles Tuamotu-Gambiers
+ARATIKA	Aratika			Aratika	Iles Tuamotu-Gambiers
+ARUTUA	Arutua			Arutua	Iles Tuamotu-Gambiers
+ATIHA	Atiha			Moorea	Iles Du Vent
+HIVA-OA/ATUONA	Atuona			Hiva-Oa	Iles Marquises
+GAMBIER/AUKENA	Aukena			Aukena	Iles Tuamotu-Gambiers
+RANGIROA/AVATORU	Avatoru			Rangiroa	Iles Tuamotu-Gambiers
+TAPUTAPUATEA/AVERA	Avera			Raiatea	Iles Sous Le Vent
+RURUTU/AVERA	Avera			Rurutu	Iles Australes
+EIAO	Eiao			Eiao	Iles Marquises
+HIVA-OA/EIAONE	Eiaone			Hiva-Oa	Iles Marquises
+TAHAA/FAAAHA	Faaaha			Tahaa	Iles Sous Le Vent
+ANAA/FAAITE	Faaite			Faaite	Iles Tuamotu-Gambiers
+FAAITE	Faaite			Faaite	Iles Tuamotu-Gambiers
+FAAONE	Faaone		Grand Taravao	Tahiti	Iles Du Vent
+FAKAHINA	Fakahina			Fakahina	Iles Tuamotu-Gambiers
+TUREIA/FAKAMARU	Fakamaru			Tureia	Iles Tuamotu-Gambiers
+FAKARAVA	Fakarava			Fakarava	Iles Tuamotu-Gambiers
+TAKAPOTO/FAKATOPATERE	Fakatopatere			Takapoto	Iles Tuamotu-Gambiers
+FANGATAU	Fangatau			Fangatau	Iles Tuamotu-Gambiers
+FANGATAUFA	Fangataufa			Fangataufa	Iles Tuamotu-Gambiers
+FATU HUKU	Fatu Huku			Fatu Huku	Iles Marquises
+FATU-HIVA	Fatu-Hiva			Fatu-Hiva	Iles Marquises
+FETUNA	Fetuna			Raiatea	Iles Sous Le Vent
+GAMBIER	Gambier			Akamaru	Iles Tuamotu-Gambiers
+UA-POU/HAAKUTI	Haakuti			Ua-Pou	Iles Marquises
+TAHAA/HAAMENE	Haamene			Tahaa	Iles Sous Le Vent
+MOOREA-MAIAO/HAAPITI	Haapiti			Moorea	Iles Du Vent
+UA-POU/HAKAHAU	Hakahau			Ua-Pou	Iles Marquises
+UA-POU/HAKAHETAU	Hakahetau			Ua-Pou	Iles Marquises
+UA-POU/HAKAMAII	Hakamaii			Ua-Pou	Iles Marquises
+UA-POU/HAKATAO	Hakatao			Ua-Pou	Iles Marquises
+HIVA-OA/HANAIAPA	Hanaiapa			Hiva-Oa	Iles Marquises
+HIVA-OA/HANAPAOA	Hanapaoa			Hiva-Oa	Iles Marquises
+UA-HUKA/HANAVAVE	Hanavave			Ua-Huka	Iles Marquises
+FATU-HIVA/HANAVE	Hanave			Fatu-Hiva	Iles Marquises
+UA HUKA/HANE	Hane			Ua Huka	Iles Marquises
+HAO	Hao			Hao	Iles Tuamotu-Gambiers
+HARAIKI	Haraiki			Haraiki	Iles Tuamotu-Gambiers
+NUKU HIVA/HATIHEU	Hatiheu			Nuku Hiva	Iles Marquises
+HATU ITI	Hatu Iti			Hatu Iti	Iles Marquises
+HATUTAA	Hatutaa			Hatutaa	Iles Marquises
+HAUMI	Haumi			Moorea	Iles Du Vent
+HAURU	Hauru			Moorea	Iles Du Vent
+RURUTU/HAUTI	Hauti			Rurutu	Iles Australes
+HEREHERETUE	Hereheretue			Hereheretue	Iles Tuamotu-Gambiers
+HIKITAKE	Hikitake			Amanu	Iles Tuamotu-Gambiers
+HIKUERU	Hikueru			Hikueru	Iles Tuamotu-Gambiers
+HIKUERU	Hikueru			Tekokota	Iles Tuamotu-Gambiers
+TAHAA/HIPU	Hipu			Tahaa	Iles Sous Le Vent
+HITI	Hiti			Hiti	Iles Tuamotu-Gambiers
+HITIAA O TE RA	Hitiaa O Te Ra			Tahiti	Iles Du Vent
+HIVA-OA	Hiva-Oa			Hiva-Oa	Iles Marquises
+UA-POU/HOHOI	Hohoi			Ua-Pou	Iles Marquises
+TAHAA/IRIPAU	Iripau			Tahaa	Iles Sous Le Vent
+GAMBIER/KAMAKA	Kamaka			Kamaka	Iles Tuamotu-Gambiers
+MAKEMO/KATIU	Katiu			Katiu	Iles Tuamotu-Gambiers
+KAUEHI	Kauehi			Kauehi	Iles Tuamotu-Gambiers
+KAUEHI	Kauehi			Kauehi	Iles Tuamotu-Gambiers
+KAUKURA	Kaukura			Kaukura	Iles Tuamotu-Gambiers
+MAATEA	Maatea			Moorea	Iles Du Vent
+MAHAENA	Mahaena			Tahiti	Iles Du Vent
+RAIVAVAE/MAHANATOA	Mahanatoa			Raivavae	Iles Australes
+MAHAREPA	Maharepa			Moorea	Iles Du Vent
+MAHETIKA	Mahetika			Marokau	Iles Tuamotu-Gambiers
+TUBUAI/MAHU	Mahu			Tubuai	Iles Australes
+GAMBIER/MAKAROA	Makaroa			Makaroa	Iles Tuamotu-Gambiers
+RANGIROA/MAKATEA	Makatea			Makatea	Iles Tuamotu-Gambiers
+MAKEMO	Makemo			Makemo	Iles Tuamotu-Gambiers
+MAKEMO	Makemo			Katiu	Iles Tuamotu-Gambiers
+MAKEMO	Makemo			Makemo	Iles Tuamotu-Gambiers
+GAMBIER/MANGAREVA	Mangareva			Mangareva	Iles Tuamotu-Gambiers
+MANIHI	Manihi			Manihi	Iles Tuamotu-Gambiers
+GAMBIER/MANIUI	Maniui			Maniui	Iles Tuamotu-Gambiers
+MANUAE (SCILLY)	Manuae (Scilly)			Manuae (Scilly)	Iles Sous Le Vent
+HAO/MANUHANGI	Manuhangi			Manuhangi	Iles Tuamotu-Gambiers
+PUKARUA/MARAUTAGAROA	Marautagaroa			Pukarua	Iles Tuamotu-Gambiers
+MARIA	Maria			Maria (Gambier)	Iles Tuamotu-Gambiers
+MARIA (AUSTRALES)	Maria (Australes)			Maria (Australes)	Iles Australes
+HIKUERU/MAROKAU	Marokau			Marokau	Iles Tuamotu-Gambiers
+MAROTIRI	Marotiri			Marotiri	Iles Australes
+MARUTEA NORD	Marutea Nord			Marutea Nord	Iles Tuamotu-Gambiers
+MARUTEA NORD	Marutea Nord			Marutea Nord	Iles Tuamotu-Gambiers
+GAMBIER/MARUTEA SUD	Marutea Sud			Marutea Sud	Iles Tuamotu-Gambiers
+MATAIEA	Mataiea			Tahiti	Iles Du Vent
+MATAIVA	Mataiva			Mataiva	Iles Tuamotu-Gambiers
+TUBUAI/MATAURA	Mataura			Tubuai	Iles Australes
+MATUREI VAVAO	Maturei Vavao			Maturei Vavao	Iles Tuamotu-Gambiers
+MAUPIHAA (MOPELIA)	Maupihaa (Mopelia)			Maupihaa (Mopelia)	Iles Sous Le Vent
+MAUPITI	Maupiti			Maupiti	Iles Sous Le Vent
+MEHETIA	Mehetia			Mehetia	Iles Du Vent
+RURUTU/MOERAI	Moerai			Rurutu	Iles Australes
+MOHOTANI	Mohotani			Mohotani	Iles Marquises
+GAMBIER/MORANE	Morane			Morane	Iles Tuamotu-Gambiers
+MOTU ONE (BELLINGHAUSEN)	Motu One (Bellinghausen)			Motu One (Bellinghausen)	Iles Sous Le Vent
+MOTU ONE (MARQUISES)	Motu One (Marquises)			Motu One (Marquises)	Iles Marquises
+HIVA-OA/MOTU UA	Motu Ua			Hiva-Oa	Iles Marquises
+GAMBIER/MOTUREIVAVAO	Motureivavao			Motureivavao	Iles Tuamotu-Gambiers
+MOTUTAPU	Motutapu			Motutapu	Iles Tuamotu-Gambiers
+ANAA/MOTUTUNGA	Motutunga			Motutunga	Iles Tuamotu-Gambiers
+MURUROA	Mururoa			Mururoa	Iles Tuamotu-Gambiers
+RURUTU/MUTUAURA	Mutuaura			Rimatara	Iles Australes
+HIVA-OA/NAHOE	Nahoe			Hiva-Oa	Iles Marquises
+NAPUKA	Napuka			Napuka	Iles Tuamotu-Gambiers
+HAO/NENGONENGO	Nengonengo			Nengonengo	Iles Tuamotu-Gambiers
+FAKARAVA/NIAU	Niau			Niau	Iles Tuamotu-Gambiers
+NIHIRU	Nihiru			Nihiru	Iles Tuamotu-Gambiers
+TAHAA/NIUA	Niua			Tahaa	Iles Sous Le Vent
+APATAKI/NIUTAHI	Niutahi			Apataki	Iles Tuamotu-Gambiers
+NUKU-HIVA/NUKUATAHA	Nukuataha			Nuku-Hiva	Iles Marquises
+NUKU-HIVA	Nuku-Hiva			Nuku-Hiva	Iles Marquises
+NUKUTAVAKE	Nukutavake			Nukutavake	Iles Tuamotu-Gambiers
+NUKUTAVAKE	Nukutavake			Vahitahi	Iles Tuamotu-Gambiers
+NUKUTAVAKE	Nukutavake			Nukutavake	Iles Tuamotu-Gambiers
+NUKUTEPIPI	Nukutepipi			Nukutepipi	Iles Tuamotu-Gambiers
+FATU-HIVA/OMOA	Omoa			Fatu-Hiva	Iles Marquises
+TAPUTAPUATEA/OPOA	Opoa			Raiatea	Iles Sous Le Vent
+OROFARA (Village)	Orofara (Village)			Tahiti	Iles Du Vent
+HAO/OTEPA	Otepa			Hao	Iles Tuamotu-Gambiers
+MATAIVA/PAHUA	Pahua			Mataiva	Iles Tuamotu-Gambiers
+MOOREA-MAIAO/PAOPAO	Paopao			Moorea	Iles Du Vent
+FAKARAVA/PAPARARA	Paparara			Fakarava	Iles Tuamotu-Gambiers
+ARATIKA/PAPARARA	Paparara			Aratika	Iles Tuamotu-Gambiers
+PAPEARI	Papeari		Grand Taravao	Tahiti	Iles Du Vent
+PAPENOO	Papenoo			Tahiti	Iles Du Vent
+MOOREA-MAIAO/PAPETOAI	Papetoai			Moorea	Iles Du Vent
+HAO/PARAOA	Paraoa			Paraoa	Iles Tuamotu-Gambiers
+TAHAA/PATIO	Patio			Tahaa	Iles Sous Le Vent
+HIVA-OA/PAUMAU	Paumau			Hiva-Oa	Iles Marquises
+PINAKI	Pinaki			Pinaki	Iles Tuamotu-Gambiers
+MAKEMO/POUHEVA	Pouheva			Makemo	Iles Tuamotu-Gambiers
+HIVA-OA/PUAMAU	Puamau			Hiva-Oa	Iles Marquises
+PUEU	Pueu		Grand Taravao	Tahiti	Iles Du Vent
+PUKAPUKA	Pukapuka			Pukapuka	Iles Tuamotu-Gambiers
+PUKARUA	Pukarua			Pukarua	Iles Tuamotu-Gambiers
+TAPUTAPUATEA/PUOHINE	Puohine			Raiatea	Iles Sous Le Vent
+RAIVAVAE/RAIRUA	Rairua			Raivavae	Iles Australes
+KAUKURA/RAITAHITI	Raitahiti			Kaukura	Iles Tuamotu-Gambiers
+FAKARAVA/RARAKA	Raraka			Raraka	Iles Tuamotu-Gambiers
+MAKEMO/RAROIA	Raroia			Raroia	Iles Tuamotu-Gambiers
+RAVAHERE	Ravahere			Ravahere	Iles Tuamotu-Gambiers
+REAO	Reao			Reao	Iles Tuamotu-Gambiers
+REITORU	Reitoru			Reitoru	Iles Tuamotu-Gambiers
+REKAREKA	Rekareka			Rekareka	Iles Tuamotu-Gambiers
+RIMATARA	Rimatara			Rimatara	Iles Australes
+FAKARAVA/ROTOAVA	Rotoava			Fakarava	Iles Tuamotu-Gambiers
+RURUTU	Rurutu			Rurutu	Iles Australes
+TAHAA/RUUTIA	Ruutia			Tahaa	Iles Sous Le Vent
+TUBUAI/TAAHUAIA	Taahuaia			Tubuai	Iles Australes
+TAENGA	Taenga			Taenga	Iles Tuamotu-Gambiers
+TAENGA	Taenga			Taenga	Iles Tuamotu-Gambiers
+ANAA/TAHANEA	Tahanea			Tahanea	Iles Tuamotu-Gambiers
+TAHUATA	Tahuata			Tahuata	Iles Marquises
+FAKARAVA/TAIARO	Taiaro			Taiaro	Iles Tuamotu-Gambiers
+NUKU-HIVA/TAIOHAE	Taiohae			Nuku-Hiva	Iles Marquises
+NUKU-HIVA/TAIPIVAI	Taipivai			Nuku-Hiva	Iles Marquises
+TAKAPOTO	Takapoto			Takapoto	Iles Tuamotu-Gambiers
+TAKAROA	Takaroa			Takaroa	Iles Tuamotu-Gambiers
+TAKUME	Takume			Takume	Iles Tuamotu-Gambiers
+TAHAA/TAPUAMU	Tapuamu			Tahaa	Iles Sous Le Vent
+REAO/TAPUARAVA	Tapuarava			Reao	Iles Tuamotu-Gambiers
+TAPUTAPUATEA	Taputapuatea			Raiatea	Iles Sous Le Vent
+GAMBIER/TARAVAI	Taravai			Taravai	Iles Tuamotu-Gambiers
+TARAVAO	Taravao			Tahiti	Iles Du Vent
+TATAKOTO	Tatakoto			Tatakoto	Iles Tuamotu-Gambiers
+TAUERE	Tauere			Tauere	Iles Tuamotu-Gambiers
+TAUTIRA	Tautira		Grand Taravao	Tahiti	Iles Du Vent
+TEAHUPOO	Teahupoo		Grand Taravao	Tahiti	Iles Du Vent
+FANGATAU/TEANA	Teana			Fangatau	Iles Tuamotu-Gambiers
+MOOREA-MAIAO/TEAVARO	Teavaro			Moorea	Iles Du Vent
+TU MARAAA/TEHURUI	Tehurui			Raiatea	Iles Sous Le Vent
+TEKOKOTA	Tekokota			Tekokota	Iles Tuamotu-Gambiers
+TEMAE	Temae			Moorea	Iles Du Vent
+TEMATANGI	Tematangi			Tematangi	Iles Tuamotu-Gambiers
+GAMBIER/TEMOE	Temoe			Temoe	Iles Tuamotu-Gambiers
+GAMBIER/TENARARO	Tenararo			Tenararo	Iles Tuamotu-Gambiers
+GAMBIER/TENARUNGA	Tenarunga			Tenarunga	Iles Tuamotu-Gambiers
+NAPUKA/TEPOTO NORD	Tepoto Nord			Tepoto Nord	Iles Tuamotu-Gambiers
+TEPOTO SUD	Tepoto Sud			Tepoto Sud	Iles Tuamotu-Gambiers
+NUKU-HIVA/TERRE DESERTE	Terre Deserte			Nuku-Hiva	Iles Marquises
+TETIAROA	Tetiaroa			Tetiaroa	Iles Du Vent
+TUMARAAA/TEVAITOA	Tevaitoa			Raiatea	Iles Sous Le Vent
+TIAHURA	Tiahura			Moorea	Iles Du Vent
+TIAIA	Tiaia			Moorea	Iles Du Vent
+TIAREI	Tiarei			Tahiti	Iles Du Vent
+TIKEHAU	Tikehau			Tikehau	Iles Tuamotu-Gambiers
+TAKAROA/TIKEI	Tikei			Tikei	Iles Tuamotu-Gambiers
+RANGIROA/TIPUTA	Tiputa			Rangiroa	Iles Tuamotu-Gambiers
+TAHAA/TIVA	Tiva			Tahaa	Iles Sous Le Vent
+TOAHOTU	Toahotu		Grand Taravao	Tahiti	Iles Du Vent
+TOAU	Toau			Toau	Iles Tuamotu-Gambiers
+TUANAKE	Tuanake			Tuanake	Iles Tuamotu-Gambiers
+TUBUAI	Tubuai			Tubuai	Iles Australes
+TIKEHAU/TUHERAHERA	Tuherahera			Tikehau	Iles Tuamotu-Gambiers
+TUMARAA	Tumaraa			Raiatea	Iles Sous Le Vent
+TATAKOTO/TUMUKURU	Tumukuru			Tatakoto	Iles Tuamotu-Gambiers
+TUPAI	Tupai			Tupai	Iles Sous Le Vent
+HIKUERU/TUPAPATI	Tupapati			Hikueru	Iles Tuamotu-Gambiers
+TUREIA	Tureia			Tureia	Iles Tuamotu-Gambiers
+UA-HUKA	Ua-Huka			Ua-Huka	Iles Marquises
+RIMATARA/UTUAURA	Utuaura			Rimatara	Iles Australes
+UTUROA	Uturoa			Raiatea	Iles Sous Le Vent
+GAMBIER/VAHANGA	Vahanga			Vahanga	Iles Tuamotu-Gambiers
+VAHITAHI	Vahitahi			Vahitahi	Iles Tuamotu-Gambiers
+VAHITAHI	Vahitahi			Vahitahi	Iles Tuamotu-Gambiers
+TUMARAAA/VAIAAU	Vaiaau			Raiatea	Iles Sous Le Vent
+VAIARE	Vaiare			Moorea	Iles Du Vent
+NUKUTAVAKE/VAIRAATEA	Vairaatea			Vairaatea	Iles Tuamotu-Gambiers
+VAIRAO	Vairao		Grand Taravao	Tahiti	Iles Du Vent
+TAHUATA/VAITAHU	Vaitahu			Tahuata	Iles Marquises
+BORA-BORA/VAITAPE	Vaitape			Bora-Bora	Iles Sous Le Vent
+VAITEPAUA	Vaitepaua			Makatea	Iles Tuamotu-Gambiers
+TAHAA/VAITOARE	Vaitoare			Tahaa	Iles Sous Le Vent
+RAIVAVAE/VAIURU	Vaiuru			Raivavae	Iles Australes
+VANAVANA	Vanavana			Vanavana	Iles Tuamotu-Gambiers

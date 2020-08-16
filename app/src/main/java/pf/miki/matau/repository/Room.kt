@@ -35,7 +35,10 @@ data class PAd @Ignore constructor(
         var description: String = "",
         var date: Date = Date(),
         var contact: String = "",
-        var location: String = "") {
+        var location: String = ""//,
+//        var locations: String = "",
+//        var category: String
+) {
 
     var images: String = ""
     var pinned: Boolean = false
@@ -106,6 +109,8 @@ interface PAdDAO {
     @Query("DELETE FROM PAd WHERE NOT(pinned) AND created < :date")
     fun deleteOldAds(date: Date)
 
+    @Query("SELECT MAX(fcpPrice) as max FROM PAd")
+    fun getMaxPrice(): LiveData<Int>
 }
 
 @Database(entities = [PAd::class], version = 2)
@@ -119,6 +124,14 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 val date = Date().time - (15 * 60 * 1000)
                 database.execSQL("ALTER TABLE PAd ADD COLUMN created INTEGER NOT NULL DEFAULT $date")
+            }
+        }
+
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // compute locations
+                // how to compute categories
+
             }
         }
 
